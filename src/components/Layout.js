@@ -1,0 +1,149 @@
+// Importation des dépendances nécessaires
+import React from "react";
+import "../assets/css/Home.css"; // Importation du fichier CSS pour la mise en page
+import HomeScript from "../assets/js/HomeScript"; // Importation d'un script personnalisé pour la page
+import loginImage from "../assets/img/user.png"; // Importation d'une image pour le profil utilisateur
+import { useNavigate } from "react-router-dom"; // Importation de 'useNavigate' pour la navigation
+import logo from "../assets/img/Logo_min.PNG"; // Importation du logo de l'application.
+import Sidebar from "./Sidebar"; // Importation du composant Sidebar
+
+// Définition du composant Layout qui sera utilisé comme un modèle de page (avec du contenu dynamique via 'children')
+const Layout = ({ children }) => {
+  // Récupération des informations de l'utilisateur depuis le localStorage (si elles existent)
+  let user = JSON.parse(localStorage.getItem("user-info"));
+
+  // Utilisation de 'useNavigate' pour effectuer des redirections dans l'application
+  const navigate = useNavigate();
+
+  // Fonction de déconnexion qui efface les informations de l'utilisateur du localStorage et redirige vers la page de connexion
+  const logOut = () => {
+    localStorage.clear(); // Effacer les données utilisateur du localStorage
+    navigate("/"); // Rediriger l'utilisateur vers la page d'accueil (login)
+  };
+
+  return (
+    <div className="container-fluid position-relative bg-white d-flex p-0">
+      {/* Sidebar affichée sur le côté gauche */}
+      <Sidebar user={user} />
+
+      {/* Main content - Contenu principal de la page */}
+      <div className="content shifted">
+        {/* Navbar en haut de la page */}
+        <nav className="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+          {/* Logo ou icône en version mobile */}
+          <a href="#" className="navbar-brand d-flex d-lg-none me-4">
+            <img
+              src={logo} // Affichage du logo de l'application
+              alt="Logo"
+              className="rounded-circle"
+              width="40"
+              height="40"
+            />
+          </a>
+          {/* Bouton pour basculer l'affichage de la sidebar */}
+          <button
+            className="sidebar-toggle flex-shrink-0 text-primary"
+            style={{
+              border: "none",
+              zIndex: 1000,
+              background: "none",
+              fontSize: "1.5rem",
+            }}
+          >
+            <i className="fa fa-bars"></i>
+          </button>
+          {/* Formulaire de recherche (caché sur mobile) */}
+          <form className="d-none d-md-flex ms-4">
+            <input
+              type="search"
+              className="form-control border-0"
+              placeholder="Search"
+            />
+          </form>
+          {/* Section de la barre de navigation avec notifications et messages */}
+          <div className="navbar-nav align-items-center ms-auto">
+            {/* Notification de message */}
+            <div className="nav-item dropdown">
+              <button type="button" className="nav-link dropdown-toggle btn">
+                <i className="fa fa-envelope me-lg-2"></i>
+                <span className="d-none d-lg-inline-flex items">Message</span>
+              </button>
+              <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-bottom m-0">
+                <div className="dropdown-item">
+                  <div className="d-flex align-items-center">
+                    {/* Image de profil de l'expéditeur */}
+                    <img
+                      src={loginImage}
+                      alt="Profile"
+                      className="rounded-circle"
+                      width="40"
+                      height="40"
+                    />
+                    <div className="ms-2">
+                      <h6>John sent you a message</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Notification de nouvelle activité (notifications générales) */}
+            <div className="nav-item dropdown">
+              <a href="#" className="nav-link dropdown-toggle">
+                <i className="fa fa-bell me-lg-2"></i>
+                <span className="d-none d-lg-inline-flex items">
+                  Notifications
+                </span>
+              </a>
+            </div>
+
+            {/* Section pour afficher l'image de profil et permettre la déconnexion */}
+            {localStorage.getItem("user-info") ? (
+              <div className="nav-item dropdown">
+                <a href="#" className="nav-link dropdown-toggle">
+                  {/* Affichage de l'image de profil */}
+                  <img
+                    src={loginImage} // Remplacez 'loginImage' par l'image appropriée si nécessaire
+                    alt="Profile"
+                    className="rounded-circle"
+                    width="40"
+                    height="40"
+                  />
+                  <span className="d-none d-lg-inline items">
+                    {user && user.prenom} <strong>{user && user.nom}</strong>
+                  </span>
+                </a>
+                {/* Menu déroulant avec l'option de déconnexion */}
+                <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-bottom m-0">
+                  <a href="#" className="dropdown-item" onClick={logOut}>
+                    Déconnexion
+                  </a>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </nav>
+
+        {/* Contenu dynamique de la page, qui sera fourni par le parent (via 'children') */}
+        {children}
+        <br />
+        <br />
+      </div>
+      <br />
+      <br />
+
+      {/* Bouton de retour en haut de la page */}
+      <a
+        href="#"
+        className="btn btn-lg btn-primary btn-lg-square back-to-top hide"
+      >
+        <i className="bi bi-arrow-up"></i>
+      </a>
+
+      {/* Script spécifique à la page Home */}
+      <HomeScript />
+    </div>
+  );
+};
+
+export default Layout;
