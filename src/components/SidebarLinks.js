@@ -9,96 +9,60 @@ const SidebarLinks = ({ user }) => {
 
   return (
     <div className="navbar-nav w-100">
-      {/* Lien vers le tableau de bord */}
-      <Link
-        to="/home"
-        className={`nav-item nav-link ${isActive("/home") ? "active" : ""}`}
-      >
-        <i className="fa fa-tachometer-alt me-2"></i>Dashboard
-      </Link>
-
-      {/* Lien vers la gestion des étudiants */}
-      <Link
-        to="/etudiants"
-        className={`nav-item nav-link ${
-          isActive("/etudiants") || isActive("/add/etudiant") ? "active" : ""
-        }`}
-      >
-        <i className="fa fa-users me-2"></i>Etudiants
-      </Link>
-
-      {/* Lien vers la gestion des résultats */}
-      <Link
-        to="/resultats"
-        className={`nav-item nav-link ${
-          isActive("/resultats") || isActive("/add/resultat") ? "active" : ""
-        }`}
-      >
-        <i className="fa fa-clipboard-check me-2"></i>Résultats
-      </Link>
-
-      {/* Lien vers la gestion des programmations */}
-      <Link
-        to="/programmations"
-        className={`nav-item nav-link ${
-          isActive("/programmations") || isActive("/add/programmation")
-            ? "active"
-            : ""
-        }`}
-      >
-        <i className="fa fa-calendar-alt me-2"></i>Programmation
-      </Link>
-
-      {/* Lien vers les rappels */}
-      <Link
-        to="/rappels"
-        className={`nav-item nav-link ${isActive("/rappels") ? "active" : ""}`}
-      >
-        <i className="fa fa-bell me-2"></i>Rappels
-      </Link>
-
-      {/* Affichage des liens réservés uniquement aux administrateurs */}
-      {user.role == 1 && (
-        <>
-          {/* Lien vers la vue globale */}
+      {[
+        { to: "/home", icon: "tachometer-alt", label: "Dashboard" },
+        {
+          to: "/etudiants",
+          icon: "users",
+          label: "Étudiants",
+          extra: ["/add/etudiant"],
+        },
+        {
+          to: "/resultats",
+          icon: "clipboard-check",
+          label: "Résultats",
+          extra: ["/add/resultat"],
+        },
+        {
+          to: "/programmations",
+          icon: "calendar-alt",
+          label: "Programmation",
+          extra: ["/add/programmation"],
+        },
+        { to: "/rappels", icon: "bell", label: "Rappels" },
+        ...(user.role == 1
+          ? [
+              { to: "/global", icon: "globe", label: "Global" },
+              {
+                to: "/utilisateurs",
+                icon: "user-friends",
+                label: "Utilisateurs",
+                extra: ["/register"],
+              },
+              {
+                to: "/moniteurs",
+                icon: "chalkboard-teacher",
+                label: "Moniteurs",
+              },
+              { to: "/logs", icon: "file-alt", label: "Logs" },
+            ]
+          : []),
+      ].map(({ to, icon, label, extra = [] }) => {
+        const isActiveLink =
+          isActive(to) || extra.some((path) => isActive(path));
+        return (
           <Link
-            to="/global"
+            key={to}
+            to={to}
             className={`nav-item nav-link ${
-              isActive("/global") ? "active" : ""
+              isActiveLink ? "active bg-body-secondary fw-bold" : ""
             }`}
           >
-            <i className="fa fa-globe me-2"></i>Global
+            <i className={`fa fa-${icon} me-2`}></i>
+            <span className="text-body">{label}</span>
           </Link>
-
-          {/* Lien vers la gestion des utilisateurs */}
-          <Link
-            to="/utilisateurs"
-            className={`nav-item nav-link ${
-              isActive("/utilisateurs") || isActive("/register") ? "active" : ""
-            }`}
-          >
-            <i className="fa fa-user-friends me-2"></i>Utilisateurs
-          </Link>
-
-          {/* Lien vers la gestion des moniteurs */}
-          <Link
-            to="/moniteurs"
-            className={`nav-item nav-link ${
-              isActive("/moniteurs") ? "active" : ""
-            }`}
-          >
-            <i className="fa fa-chalkboard-teacher me-2"></i>Moniteurs
-          </Link>
-
-          {/* Lien vers les logs */}
-          <Link
-            to="/logs"
-            className={`nav-item nav-link ${isActive("/logs") ? "active" : ""}`}
-          >
-            <i className="fa fa-file-alt me-2"></i>Logs
-          </Link>
-        </>
-      )}
+        );
+      })}
     </div>
   );
 };

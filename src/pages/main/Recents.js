@@ -23,7 +23,7 @@ const Recents = () => {
         throw new Error("Erreur lors de la récupération des etudiants."); // Gère les erreurs HTTP
       }
       const data = await response.json(); // Parse les données JSON
-      setEtudiants(data); // Met à jour l'état avec les données
+      setEtudiants(data.etudiants); // Met à jour l'état avec les données
     } catch (err) {
       setError(err.message); // Stocke le message d'erreur
     } finally {
@@ -44,7 +44,7 @@ const Recents = () => {
         </div>
       ) : (
         <>
-          <div className="bg-light text-center rounded p-4 mb-4">
+          <div className="bg-body text-center rounded p-4 mb-4">
             <div className="d-flex align-items-center justify-content-between mb-4">
               <h6 className="mb-0">Nouveaux étudiants (10 dern.)</h6>
               <Link to="/etudiants">Voir</Link>
@@ -62,37 +62,45 @@ const Recents = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {etudiants.map((etudiant) => (
-                    <tr key={etudiant.id}>
-                      <td>etu-{etudiant.id}</td>
-                      <td>{etudiant.nom}</td>
-                      <td>{etudiant.prenom}</td>
-                      <td
-                        className={`text-center text-capitalize ${
-                          etudiant.motif_inscription === "permis"
-                            ? "bg-info"
-                            : "bg-secondary"
-                        } text-white`}
-                      >
-                        {etudiant.motif_inscription}
-                      </td>
-                      <td>
-                        {etudiant.montant_paye >= etudiant.scolarite ? (
-                          <span className="badge bg-success">Soldé</span>
-                        ) : (
-                          <span className="badge bg-warning">Pas soldé</span>
-                        )}
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-sm btn-primary"
-                          onClick={() => navigate(`/etudiant/${etudiant.id}`)}
-                        >
-                          Voir
-                        </button>
+                  {etudiants.length === 0 ? (
+                    <tr>
+                      <td colSpan="6" className="text-center">
+                        Aucune donnée disponible pour le moment.
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    etudiants.map((etudiant) => (
+                      <tr key={etudiant.id}>
+                        <td>etu-{etudiant.id}</td>
+                        <td>{etudiant.nom}</td>
+                        <td>{etudiant.prenom}</td>
+                        <td
+                          className={`text-center text-capitalize ${
+                            etudiant.motif_inscription === "permis"
+                              ? "bg-info"
+                              : "bg-secondary"
+                          } text-white`}
+                        >
+                          {etudiant.motif_inscription}
+                        </td>
+                        <td>
+                          {etudiant.montant_paye >= etudiant.scolarite ? (
+                            <span className="badge bg-success">Soldé</span>
+                          ) : (
+                            <span className="badge bg-warning">Pas soldé</span>
+                          )}
+                        </td>
+                        <td>
+                          <button
+                            className="btn btn-sm btn-primary"
+                            onClick={() => navigate(`/etudiant/${etudiant.id}`)}
+                          >
+                            Voir
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

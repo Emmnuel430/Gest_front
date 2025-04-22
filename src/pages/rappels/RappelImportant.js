@@ -64,7 +64,7 @@ const RappelImportant = () => {
   };
 
   return (
-    <div className="bg-light rounded p-4">
+    <div className="bg-body rounded p-4">
       <div className="d-flex align-items-center justify-content-between mb-2">
         <h4 className="mb-0">Rappels Importants</h4>
         {/* <a href="/rappels-complets">Voir tout</a> */}

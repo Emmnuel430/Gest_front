@@ -22,14 +22,14 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <div className="container-fluid position-relative bg-white d-flex p-0">
+    <div className="container-fluid position-relative bg-body d-flex p-0">
       {/* Sidebar affichée sur le côté gauche */}
       <Sidebar user={user} />
 
       {/* Main content - Contenu principal de la page */}
-      <div className="content shifted">
+      <div className="content shifted bg-body">
         {/* Navbar en haut de la page */}
-        <nav className="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+        <nav className="navbar navbar-expand bg-body navbar-body sticky-top px-4 py-0">
           {/* Logo ou icône en version mobile */}
           <a href="#" className="navbar-brand d-flex d-lg-none me-4">
             <img
@@ -66,9 +66,11 @@ const Layout = ({ children }) => {
             <div className="nav-item dropdown">
               <button type="button" className="nav-link dropdown-toggle btn">
                 <i className="fa fa-envelope me-lg-2"></i>
-                <span className="d-none d-lg-inline-flex items">Message</span>
+                <span className="d-none d-lg-inline-flex items text-body">
+                  Message
+                </span>
               </button>
-              <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-bottom m-0">
+              <div className="dropdown-menu dropdown-menu-end bg-body border-0 rounded-bottom m-0">
                 <div className="dropdown-item">
                   <div className="d-flex align-items-center">
                     {/* Image de profil de l'expéditeur */}
@@ -80,7 +82,7 @@ const Layout = ({ children }) => {
                       height="40"
                     />
                     <div className="ms-2">
-                      <h6>John sent you a message</h6>
+                      <h6 className="text-body">John sent you a message</h6>
                     </div>
                   </div>
                 </div>
@@ -91,7 +93,7 @@ const Layout = ({ children }) => {
             <div className="nav-item dropdown">
               <a href="#" className="nav-link dropdown-toggle">
                 <i className="fa fa-bell me-lg-2"></i>
-                <span className="d-none d-lg-inline-flex items">
+                <span className="d-none d-lg-inline-flex items text-body">
                   Notifications
                 </span>
               </a>
@@ -109,13 +111,17 @@ const Layout = ({ children }) => {
                     width="40"
                     height="40"
                   />
-                  <span className="d-none d-lg-inline items">
+                  <span className="d-none d-lg-inline items text-body">
                     {user && user.prenom} <strong>{user && user.nom}</strong>
                   </span>
                 </a>
                 {/* Menu déroulant avec l'option de déconnexion */}
-                <div className="dropdown-menu dropdown-menu-end bg-light border-0 rounded-bottom m-0">
-                  <a href="#" className="dropdown-item" onClick={logOut}>
+                <div className="dropdown-menu dropdown-menu-end bg-body border-0 rounded-bottom m-0">
+                  <a
+                    href="#"
+                    className="dropdown-item text-body"
+                    onClick={logOut}
+                  >
                     Déconnexion
                   </a>
                 </div>

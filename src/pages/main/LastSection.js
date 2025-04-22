@@ -150,7 +150,7 @@ const LastSection = () => {
           <div className="row g-4">
             {/* Rappels importants */}
             <div className="col-sm-12 col-md-6 col-xl-4">
-              <div className="h-100 bg-light rounded p-4">
+              <div className="h-100 bg-body rounded p-4">
                 <div className="d-flex align-items-center justify-content-between mb-2">
                   <h6 className="mb-0">Dernières alertes</h6>
                   <Link to="/rappels">Voir</Link>
@@ -203,7 +203,7 @@ const LastSection = () => {
             </div>
             {/* Derniers logs */}
             <div className="col-sm-12 col-md-6 col-xl-4">
-              <div className="h-100 bg-light rounded p-4">
+              <div className="h-100 bg-body rounded p-4">
                 <div className="d-flex align-items-center justify-content-between mb-4">
                   <h6 className="mb-0">Logs (admin only)</h6>
                   {userInfo?.role && <Link to="/logs">Voir</Link>}
@@ -250,7 +250,7 @@ const LastSection = () => {
             </div>
             {/* Rappels */}
             <div className="col-sm-12 col-md-6 col-xl-4">
-              <div className="h-100 bg-light rounded p-4">
+              <div className="h-100 bg-body rounded p-4">
                 <div className="d-flex align-items-center justify-content-between mb-4">
                   <h6 className="mb-0">Resultats non rétirés</h6>
                   <Link to="/resultats">Voir</Link>

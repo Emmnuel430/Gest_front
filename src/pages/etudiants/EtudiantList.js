@@ -36,6 +36,7 @@ const EtudiantList = () => {
   }, [location]); // Déclenche l'effet lors d'un changement de localisation
 
   useEffect(() => {
+    if (!Array.isArray(etudiants)) return; // Sécurité : vérifie que etudiants est un tableau
     // Tri par défaut du plus récent au plus ancien
     setSortedEtudiants(
       [...etudiants].sort(

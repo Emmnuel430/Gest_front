@@ -72,7 +72,7 @@ const MoniteurList = () => {
         throw new Error("Erreur lors de la récupération des moniteurs.");
       }
       const data = await response.json();
-      setMoniteurs(data);
+      setMoniteurs(data.moniteurs);
     } catch (err) {
       setError(err.message);
     } finally {

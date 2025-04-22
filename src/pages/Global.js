@@ -106,12 +106,12 @@ const Global = () => {
         ]);
 
         // Mise à jour des états avec les données formatées
-        setEvolutionData(formatEvolutionData(evolutionJson));
-        setCategorieData(formatCategorieData(categorieJson));
-        setMoniteurData(formatMoniteurData(moniteurJson));
-        setEtapesData(formatEtapesData(etapesJson));
-        setTotaux(totauxJson);
-        setReductionData(formatReductionData(reductionJson)); // Mise à jour des données de réduction
+        setEvolutionData(formatEvolutionData(evolutionJson.data));
+        setCategorieData(formatCategorieData(categorieJson.data));
+        setMoniteurData(formatMoniteurData(moniteurJson.data));
+        setEtapesData(formatEtapesData(etapesJson.data));
+        setTotaux(totauxJson.data);
+        setReductionData(formatReductionData(reductionJson.data)); // Mise à jour des données de réduction
       } catch (err) {
         // Gestion des erreurs
         console.error("Erreur :", err.message);
@@ -125,6 +125,13 @@ const Global = () => {
     fetchData(); // Appelle la fonction pour récupérer les données
   }, []);
 
+  const isDatasetEmpty = (chartData) => {
+    return (
+      !chartData.datasets ||
+      chartData.datasets.length === 0 ||
+      chartData.datasets.every((dataset) => dataset.data.length === 0)
+    );
+  };
   // Formate les données pour le graphique d'évolution des inscriptions
   const formatEvolutionData = (data) => ({
     labels: data.map((item) => {
@@ -227,56 +234,67 @@ const Global = () => {
             <div className="row g-4 mb-4">
               {/* Carte pour le revenu total */}
               <div className="col-sm-6 col-xl-3">
-                <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div className="bg-body rounded d-flex align-items-center justify-content-between p-4">
                   <i className="fa fa-coins fa-3x text-primary"></i>
                   <div className="ms-3">
                     <div className="mb-2">Revenu total (FCFA)</div>
                     <h6 className="mb-0 h2 text-center">
                       <strong>
                         <em>
-                          {totaux?.totalMontantPaye
-                            ? new Intl.NumberFormat("fr-FR", {
-                                useGrouping: true,
-                              }).format(Math.trunc(totaux.totalMontantPaye))
-                            : "0"}{" "}
+                          {totaux?.totalMontantPaye ? (
+                            new Intl.NumberFormat("fr-FR", {
+                              useGrouping: true,
+                            }).format(Math.trunc(totaux.totalMontantPaye))
+                          ) : (
+                            <span className="text-muted">00</span>
+                          )}
                         </em>
                       </strong>
                     </h6>
                   </div>
                 </div>
               </div>
+
               {/* Carte pour le nombre total d'étudiants */}
               <div className="col-sm-6 col-xl-3">
-                <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div className="bg-body rounded d-flex align-items-center justify-content-between p-4">
                   <i className="fa fa-users fa-3x text-primary"></i>
                   <div className="ms-3">
                     <div className="mb-2">Nombre d'Étudiants</div>
                     <h6 className="mb-0 h2 text-center">
-                      {totaux?.totalEtudiants}
+                      {totaux?.totalEtudiants ?? (
+                        <span className="text-muted">00</span>
+                      )}
                     </h6>
                   </div>
                 </div>
               </div>
+
               {/* Carte pour le nombre total de moniteurs */}
               <div className="col-sm-6 col-xl-3">
-                <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div className="bg-body rounded d-flex align-items-center justify-content-between p-4">
                   <i className="fa fa-chalkboard-teacher fa-3x text-primary"></i>
                   <div className="ms-3">
                     <div className="mb-2">Nombre de Moniteurs</div>
                     <h6 className="mb-0 h2 text-center">
-                      {totaux?.totalMoniteurs}
+                      {totaux?.totalMoniteurs ?? (
+                        <span className="text-muted">00</span>
+                      )}
                     </h6>
                   </div>
                 </div>
               </div>
+
               {/* Carte pour le nombre total d'utilisateurs */}
               <div className="col-sm-6 col-xl-3">
-                <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div className="bg-body rounded d-flex align-items-center justify-content-between p-4">
                   <i className="fa fa-user-cog fa-3x text-primary"></i>
                   <div className="ms-3">
                     <div className="mb-2">Nombre d'Utilisateurs</div>
                     <h6 className="mb-0 h2 text-center">
-                      {totaux?.totalUsers}
+                      {totaux?.totalUsers ?? (
+                        <span className="text-muted">00</span>
+                      )}
                     </h6>
                   </div>
                 </div>
@@ -287,17 +305,29 @@ const Global = () => {
             <div className="row g-4">
               {/* Graphique d'évolution des inscriptions */}
               <div className="col-md-6">
-                <div className="card bg-light border-0 shadow p-3">
+                <div className="card bg-body border-0 shadow p-3">
                   <h5>Évolution des inscriptions</h5>
-                  <Line data={evolutionData} />
+                  {isDatasetEmpty(evolutionData) ? (
+                    <p className="text-muted">
+                      Aucune donnée disponible pour le moment.
+                    </p>
+                  ) : (
+                    <Line data={evolutionData} />
+                  )}{" "}
                 </div>
               </div>
 
               {/* Graphique des étudiants par étape */}
               <div className="col-md-6">
-                <div className="card bg-light border-0 shadow p-3">
+                <div className="card bg-body border-0 shadow p-3">
                   <h5>Étudiants par étape</h5>
-                  <Bar data={etapesData} />
+                  {isDatasetEmpty(etapesData) ? (
+                    <p className="text-muted">
+                      Aucune donnée disponible pour le moment.
+                    </p>
+                  ) : (
+                    <Bar data={etapesData} />
+                  )}{" "}
                 </div>
               </div>
             </div>
@@ -305,16 +335,28 @@ const Global = () => {
             <div className="row g-4 mt-4">
               {/* Graphique de répartition par moniteur */}
               <div className="col-md-6">
-                <div className="card bg-light border-0 shadow p-3">
+                <div className="card bg-body border-0 shadow p-3">
                   <h5>Répartition par moniteur</h5>
-                  <Pie data={moniteurData} />
+                  {isDatasetEmpty(moniteurData) ? (
+                    <p className="text-muted">
+                      Aucune donnée disponible pour le moment.
+                    </p>
+                  ) : (
+                    <Pie data={moniteurData} />
+                  )}{" "}
                 </div>
               </div>
               {/* Graphique de répartition par catégorie */}
               <div className="col-md-6">
-                <div className="card bg-light border-0 shadow p-3">
+                <div className="card bg-body border-0 shadow p-3">
                   <h5>Répartition par catégorie</h5>
-                  <Pie data={categorieData} />
+                  {isDatasetEmpty(categorieData) ? (
+                    <p className="text-muted">
+                      Aucune donnée disponible pour le moment.
+                    </p>
+                  ) : (
+                    <Pie data={categorieData} />
+                  )}{" "}
                 </div>
               </div>
             </div>
@@ -322,7 +364,7 @@ const Global = () => {
             <div className="row mt-4 px-auto">
               {/* Graphique de répartition par réduction */}
               <div className="col-12">
-                <div className="card bg-light border-0 shadow p-3">
+                <div className="card bg-body border-0 shadow p-3">
                   {/* Container principal avec flex-direction responsive */}
                   <div className="d-flex flex-column flex-lg-row align-items-center">
                     {/* Section gauche : titre, légende et totaux */}
@@ -370,11 +412,16 @@ const Global = () => {
 
                     {/* Section droite : graphique */}
                     <div className="col-lg-6 d-flex justify-content-center">
-                      {isMobile ? (
+                      {isDatasetEmpty(reductionData) ? (
+                        <p className="text-muted">
+                          Aucune donnée disponible pour le moment.
+                        </p>
+                      ) : isMobile ? (
                         <Pie data={reductionData} />
                       ) : (
                         <Doughnut data={reductionData} />
-                      )}
+                      )}{" "}
+                      {}
                     </div>
                   </div>
                 </div>

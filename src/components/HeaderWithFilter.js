@@ -21,7 +21,8 @@ const HeaderWithFilter = ({
 }) => {
   React.useEffect(() => {
     const sortDataList = () => {
-      if (!dataList) return;
+      if (!Array.isArray(dataList)) return; // ✅ vérification clé
+      if (!dataList) return; // Si la liste est vide, on ne fait rien
 
       let sorted = [...dataList];
 
@@ -132,8 +133,8 @@ const HeaderWithFilter = ({
       </div>
 
       {/* Tri */}
-      <div className="d-flex justify-content-end align-items-center mb-4">
-        {setSortOption && (
+      {setSortOption && Array.isArray(dataList) && dataList.length > 0 && (
+        <div className="d-flex justify-content-end align-items-center mb-4">
           <div>
             <label htmlFor="sort" className="me-2">
               Trier par :
@@ -152,8 +153,8 @@ const HeaderWithFilter = ({
               <option value="date_annee">Créé cette année</option>
             </select>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

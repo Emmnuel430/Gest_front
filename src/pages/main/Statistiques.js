@@ -51,11 +51,11 @@ const Statistiques = () => {
             {/* Carte pour le revenu total */}
             <div className="col-sm-6 col-xl-3">
               <Link to="/global" className="text-decoration-none">
-                <div className="bg-light h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
+                <div className="bg-body h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
                   <i className="fa fa-coins fa-3x text-primary"></i>
                   <div className="ms-3">
-                    <div className="mb-2">Revenu total (FCFA)</div>
-                    <h6 className="mb-0 h2 text-center">
+                    <div className="mb-2 text-body">Revenu total (FCFA)</div>
+                    <h6 className="text-body mb-0 h2 text-center">
                       <strong>
                         <em>
                           {totaux?.totalMontantPaye
@@ -73,11 +73,11 @@ const Statistiques = () => {
             {/* Carte pour le nombre total d'étudiants */}
             <div className="col-sm-6 col-xl-3">
               <Link to="/etudiants" className="text-decoration-none">
-                <div className="bg-light h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
+                <div className="bg-body h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
                   <i className="fa fa-users fa-3x text-primary"></i>
                   <div className="ms-3">
-                    <div className="mb-2">Nombre d'Étudiants</div>
-                    <h6 className="mb-0 h2 text-center">
+                    <div className="mb-2 text-body">Nombre d'Étudiants</div>
+                    <h6 className="text-body mb-0 h2 text-center">
                       {totaux?.totalEtudiants || "N/A"}
                     </h6>
                   </div>
@@ -87,11 +87,11 @@ const Statistiques = () => {
             {/* Carte pour le nombre total de moniteurs */}
             <div className="col-sm-6 col-xl-3">
               <Link to="/etudiants" className="text-decoration-none">
-                <div className="bg-light h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
+                <div className="bg-body h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
                   <i className="fa fa-chalkboard fa-3x text-primary"></i>
                   <div className="ms-3">
-                    <div className="mb-2">Etudiants au code</div>
-                    <h6 className="mb-0 h2 text-center">
+                    <div className="mb-2 text-body">Etudiants au code</div>
+                    <h6 className="text-body mb-0 h2 text-center">
                       {totaux?.etudiantsAuCode || "N/A"}
                     </h6>
                   </div>
@@ -101,11 +101,13 @@ const Statistiques = () => {
             {/* Carte pour le nombre total d'utilisateurs */}
             <div className="col-sm-6 col-xl-3">
               <Link to="/etudiants" className="text-decoration-none">
-                <div className="bg-light h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
+                <div className="bg-body h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
                   <i className="fa fa-car fa-3x text-primary"></i>
                   <div className="ms-3">
-                    <div className="mb-2">Etudiants à la conduite</div>
-                    <h6 className="mb-0 h2 text-center">
+                    <div className="mb-2 text-body">
+                      Etudiants à la conduite
+                    </div>
+                    <h6 className="text-body mb-0 h2 text-center">
                       {totaux?.etudiantsALaConduite || "N/A"}
                     </h6>
                   </div>

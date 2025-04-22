@@ -141,9 +141,10 @@ img {
 
 .sidebar .navbar .navbar-nav .nav-link:hover,
 .sidebar .navbar .navbar-nav .nav-link.active {
-  color: var(--primary);
-  background: #fff;
-  border-color: var(--primary);
+  color: var(--bs-primary);
+  background-color: var(--bs-secondary-bg); /* s'adapte automatiquement */
+  border-left: 4px solid var(--bs-primary); /* exemple visuel */
+  /* font-weight: bold; */
 }
 
 .sidebar .navbar .navbar-nav .nav-link i {

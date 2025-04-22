@@ -36,7 +36,7 @@ const UserList = () => {
           throw new Error("Erreur lors de la récupération des utilisateurs.");
         }
         const data = await response.json(); // Convertir la réponse en JSON
-        setUsers(data); // Mettre à jour l'état users avec les données récupérées
+        setUsers(data.users); // Mettre à jour l'état users avec les données récupérées
       } catch (err) {
         setError(err.message); // Si erreur, la définir dans l'état
       } finally {

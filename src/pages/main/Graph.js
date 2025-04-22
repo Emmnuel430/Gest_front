@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Importez Link pour les redirections
 import Loader from "../../components/Loader"; // Assurez-vous que le chemin est correct
-import { Line, Pie, Bar, Doughnut } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -62,8 +61,8 @@ const Graph = () => {
         ]);
 
         // Mise à jour des états avec les données formatées
-        setEvolutionData(formatEvolutionData(evolutionJson));
-        setEtapesData(formatEtapesData(etapesJson));
+        setEvolutionData(formatEvolutionData(evolutionJson.data));
+        setEtapesData(formatEtapesData(etapesJson.data));
       } catch (err) {
         // Gestion des erreurs
         console.error("Erreur :", err.message);
@@ -76,6 +75,14 @@ const Graph = () => {
 
     fetchData(); // Appel de la fonction pour récupérer les données
   }, []);
+
+  const isDatasetEmpty = (chartData) => {
+    return (
+      !chartData.datasets ||
+      chartData.datasets.length === 0 ||
+      chartData.datasets.every((dataset) => dataset.data.length === 0)
+    );
+  };
 
   // Formate les données pour le graphique d'évolution des inscriptions
   const formatEvolutionData = (data) => ({
@@ -129,21 +136,31 @@ const Graph = () => {
         <>
           <div className="row g-4 mb-4">
             <div className="col-sm-12 col-xl-6">
-              <div className="bg-light text-center rounded p-4">
+              <div className="bg-body text-center rounded p-4">
                 <div className="d-flex align-items-center justify-content-between mb-4">
                   <h6 className="mb-0">Evolution des inscriptions</h6>
                   {/* <Link to="/global">Voir</Link> */}
                 </div>
-                <Line data={evolutionData} />
+                {isDatasetEmpty(evolutionData) ? (
+                  <p className="text-muted">
+                    Aucune donnée disponible pour le moment.
+                  </p>
+                ) : (
+                  <Line data={evolutionData} />
+                )}{" "}
               </div>
             </div>
             <div className="col-sm-12 col-xl-6">
-              <div className="bg-light text-center rounded p-4">
+              <div className="bg-body text-center rounded p-4">
                 <div className="d-flex align-items-center justify-content-between mb-4">
                   <h6 className="mb-0">Etudiant par étapes</h6>
                   {/* <Link to="/etudiants">Voir</Link> */}
                 </div>
-                <Bar data={etapesData} />
+                {isDatasetEmpty(etapesData) ? (
+                  <p className="text-muted">Aucune donnée à afficher.</p>
+                ) : (
+                  <Bar data={etapesData} />
+                )}{" "}
               </div>
             </div>
           </div>
