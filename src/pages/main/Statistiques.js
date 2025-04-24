@@ -23,8 +23,8 @@ const Statistiques = () => {
         const data = await response.json(); // Définition de data
         setTotaux(data);
       } catch (error) {
-        console.error("Erreur lors de la récupération des données :", error);
-        setError(error.message);
+        // console.error("Erreur lors de la récupération des données :", error);
+        setError("Impossible de charger les données : " + error.message); // Gestion des erreurs
       } finally {
         setLoading(false);
       }

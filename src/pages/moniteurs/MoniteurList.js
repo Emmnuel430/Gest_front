@@ -74,7 +74,7 @@ const MoniteurList = () => {
       const data = await response.json();
       setMoniteurs(data.moniteurs);
     } catch (err) {
-      setError(err.message);
+      setError("Impossible de charger les données : " + err.message);
     } finally {
       setLoading(false);
     }

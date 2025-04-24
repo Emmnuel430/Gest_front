@@ -30,7 +30,6 @@ import Recap from "./pages/programmation/Recap";
 
 // Définition du composant AppRoutes qui va gérer les routes de l'application
 const AppRoutes = () => {
-  const user = JSON.parse(localStorage.getItem("user-info")); // Récupération des informations de l'utilisateur depuis le localStorage
   return (
     // Utilisation de BrowserRouter pour permettre la navigation côté client
     <BrowserRouter>

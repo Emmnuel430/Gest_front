@@ -25,7 +25,7 @@ const Recents = () => {
       const data = await response.json(); // Parse les données JSON
       setEtudiants(data.etudiants); // Met à jour l'état avec les données
     } catch (err) {
-      setError(err.message); // Stocke le message d'erreur
+      setError("Impossible de charger les données : " + err.message); // Stocke le message d'erreur
     } finally {
       setLoading(false); // Désactive le spinner global
     }

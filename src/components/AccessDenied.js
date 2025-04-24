@@ -5,8 +5,8 @@ const AccessDenied = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light px-3">
-      <div className="container bg-white p-4 p-md-5 rounded-4 shadow border border-primary">
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-body px-3">
+      <div className="container bg-body p-4 p-md-5 rounded-4 shadow border border-primary">
         <div className="row flex-column-reverse flex-md-row align-items-center">
           {/* Texte */}
           <div className="col-md-6 text-center text-md-start mt-4 mt-md-0">

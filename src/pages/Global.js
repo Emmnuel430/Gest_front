@@ -114,8 +114,7 @@ const Global = () => {
         setReductionData(formatReductionData(reductionJson.data)); // Mise à jour des données de réduction
       } catch (err) {
         // Gestion des erreurs
-        console.error("Erreur :", err.message);
-        setError(err.message);
+        setError("Impossible de charger les données : " + err.message);
       } finally {
         // Indique que le chargement est terminé
         setLoading(false);

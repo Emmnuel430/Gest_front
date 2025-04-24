@@ -40,7 +40,7 @@ const LastSection = () => {
       // console.log(data);
       setRappelsImportant(data.rappels);
     } catch (err) {
-      setError(err.message); // Stocke le message d'erreur
+      setError("Impossible de charger les données : " + err.message); // Stocke le message d'erreur
     } finally {
       setLoading(false); // Désactive le spinner global
     }
@@ -61,7 +61,7 @@ const LastSection = () => {
       // console.log(data);
       setResultats(data.resultats);
     } catch (err) {
-      setError(err.message); // Stocke le message d'erreur
+      setError("Impossible de charger les données : " + err.message); // Stocke le message d'erreur
     } finally {
       setLoading(false); // Désactive le spinner global
     }
@@ -80,7 +80,7 @@ const LastSection = () => {
       // console.log(data);
       setLogs(data);
     } catch (err) {
-      setError(err.message); // Stocke le message d'erreur
+      setError("Impossible de charger les données : " + err.message); // Stocke le message d'erreur
     } finally {
       setLoading(false); // Désactive le spinner global
     }

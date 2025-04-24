@@ -45,7 +45,7 @@ const Etudiant = () => {
         const data = await response.json();
         setEtudiant(data);
       } catch (err) {
-        setError(err.message || "Impossible de charger les données.");
+        setError("Impossible de charger les données : " + err.message);
       } finally {
         setLoading(false);
       }

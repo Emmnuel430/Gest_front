@@ -65,8 +65,7 @@ const Graph = () => {
         setEtapesData(formatEtapesData(etapesJson.data));
       } catch (err) {
         // Gestion des erreurs
-        console.error("Erreur :", err.message);
-        setError(err.message);
+        setError("Impossible de charger les données : " + err.message);
       } finally {
         // Indique que le chargement est terminé
         setLoading(false);

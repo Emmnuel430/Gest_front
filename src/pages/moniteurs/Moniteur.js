@@ -31,7 +31,7 @@ const Moniteur = () => {
         const data = await response.json(); // Conversion des données en JSON
         setMoniteur(data); // Mise à jour de l'état avec les données du moniteur
       } catch (err) {
-        setError(err.message || "Une erreur est survenue."); // Gestion des erreurs
+        setError("Impossible de charger les données : " + err.message); // Gestion des erreurs
       } finally {
         setLoading(false); // Fin du chargement
       }

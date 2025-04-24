@@ -38,7 +38,7 @@ const UserList = () => {
         const data = await response.json(); // Convertir la réponse en JSON
         setUsers(data.users); // Mettre à jour l'état users avec les données récupérées
       } catch (err) {
-        setError(err.message); // Si erreur, la définir dans l'état
+        setError("Impossible de charger les données : " + err.message); // Si erreur, la définir dans l'état
       } finally {
         setLoading(false); // Fin du chargement
       }

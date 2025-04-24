@@ -16,7 +16,7 @@ const Protected = ({ Cmp, adminOnly = false }) => {
     const user = JSON.parse(userInfo);
 
     // Si la page est réservée à l’admin et que ce n’est pas un admin
-    if (adminOnly && user.role === false) {
+    if (adminOnly && !user.role) {
       navigate("/access-denied"); // Redirection vers la page d'accès refusé
       return;
     }

@@ -42,6 +42,7 @@ const Login = () => {
       });
 
       result = await result.json();
+      console.log("Résultat du backend :", result);
 
       // Gère une réponse d'erreur de l'API
       if (result.error) {
@@ -51,7 +52,9 @@ const Login = () => {
       }
 
       // Stocke les informations utilisateur si la connexion réussit
-      localStorage.setItem("user-info", JSON.stringify(result));
+      localStorage.setItem("user-info", JSON.stringify(result.user));
+      localStorage.setItem("token", result.access_token); // Stocke le token d'accès si nécessaire
+
       setLoading(false); // Désactive l'état de chargement
       navigate("/home"); // Redirige vers la page d'accueil ou tableau de bord
     } catch (e) {
@@ -64,10 +67,10 @@ const Login = () => {
       <section>
         <div className="container">
           <div className="user signinBx">
-            <div className="imgBx">
+            <div className="imgBx bg-body">
               <img src={loginImage} alt="Login Illustration" />
             </div>
-            <div className="formBx">
+            <div className="formBx bg-body">
               <img src={logo} alt="Logo" />
               <form onSubmit={login}>
                 <h2>Connexion</h2>

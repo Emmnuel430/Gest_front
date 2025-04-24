@@ -6,6 +6,7 @@ import loginImage from "../assets/img/user.png"; // Importation d'une image pour
 import { useNavigate } from "react-router-dom"; // Importation de 'useNavigate' pour la navigation
 import logo from "../assets/img/Logo_min.PNG"; // Importation du logo de l'application.
 import Sidebar from "./Sidebar"; // Importation du composant Sidebar
+import ThemeSwitcher from "./ThemeSwitcher"; // Importation du composant ThemeSwitcher
 
 // Définition du composant Layout qui sera utilisé comme un modèle de page (avec du contenu dynamique via 'children')
 const Layout = ({ children }) => {
@@ -16,10 +17,27 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
 
   // Fonction de déconnexion qui efface les informations de l'utilisateur du localStorage et redirige vers la page de connexion
-  const logOut = () => {
-    localStorage.clear(); // Effacer les données utilisateur du localStorage
-    navigate("/"); // Rediriger l'utilisateur vers la page d'accueil (login)
-  };
+  async function logOut() {
+    const token = localStorage.getItem("token");
+
+    try {
+      await fetch(`${process.env.REACT_APP_API_BASE_URL}/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      });
+    } catch (error) {
+      console.error("Erreur de déconnexion :", error);
+    }
+
+    // Nettoyage du localStorage
+    localStorage.clear();
+
+    // Redirection
+    navigate("/");
+  }
 
   return (
     <div className="container-fluid position-relative bg-body d-flex p-0">
@@ -62,12 +80,12 @@ const Layout = ({ children }) => {
           </form>
           {/* Section de la barre de navigation avec notifications et messages */}
           <div className="navbar-nav align-items-center ms-auto">
-            {/* Notification de message */}
+            {/* Notification d'alertes */}
             <div className="nav-item dropdown">
               <button type="button" className="nav-link dropdown-toggle btn">
-                <i className="fa fa-envelope me-lg-2"></i>
+                <i className="fa fa-bell me-lg-2"></i>
                 <span className="d-none d-lg-inline-flex items text-body">
-                  Message
+                  Alertes
                 </span>
               </button>
               <div className="dropdown-menu dropdown-menu-end bg-body border-0 rounded-bottom m-0">
@@ -89,18 +107,11 @@ const Layout = ({ children }) => {
               </div>
             </div>
 
-            {/* Notification de nouvelle activité (notifications générales) */}
-            <div className="nav-item dropdown">
-              <a href="#" className="nav-link dropdown-toggle">
-                <i className="fa fa-bell me-lg-2"></i>
-                <span className="d-none d-lg-inline-flex items text-body">
-                  Notifications
-                </span>
-              </a>
-            </div>
+            {/* Changement de thème */}
+            <ThemeSwitcher />
 
             {/* Section pour afficher l'image de profil et permettre la déconnexion */}
-            {localStorage.getItem("user-info") ? (
+            {user && (
               <div className="nav-item dropdown">
                 <a href="#" className="nav-link dropdown-toggle">
                   {/* Affichage de l'image de profil */}
@@ -126,7 +137,7 @@ const Layout = ({ children }) => {
                   </a>
                 </div>
               </div>
-            ) : null}
+            )}
           </div>
         </nav>
 

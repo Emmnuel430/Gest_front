@@ -85,7 +85,7 @@ const EtudiantList = () => {
       const data = await response.json(); // Parse les données JSON
       setEtudiants(data); // Met à jour l'état avec les données
     } catch (err) {
-      setError(err.message); // Stocke le message d'erreur
+      setError("Impossible de charger les données : " + err.message); // Stocke le message d'erreur
     } finally {
       setLoading(false); // Désactive le spinner global
     }
@@ -287,7 +287,7 @@ const EtudiantList = () => {
                     ))
                 ) : (
                   <tr>
-                    <td colSpan="8" className="text-center">
+                    <td colSpan="9" className="text-center">
                       Aucun etudiant trouvé.
                     </td>
                   </tr>

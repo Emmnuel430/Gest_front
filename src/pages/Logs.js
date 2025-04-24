@@ -38,8 +38,7 @@ const Logs = () => {
         setAllLogs(data.data || []);
         setFilteredLogs(data.data || []); // Initialement, tous les logs
       } catch (err) {
-        console.error("Erreur :", err.message);
-        setError(err.message);
+        setError("Impossible de charger les données : " + err.message);
       } finally {
         setLoading(false);
       }
