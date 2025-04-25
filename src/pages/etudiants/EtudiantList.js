@@ -83,7 +83,7 @@ const EtudiantList = () => {
         throw new Error("Erreur lors de la récupération des etudiants."); // Gère les erreurs HTTP
       }
       const data = await response.json(); // Parse les données JSON
-      setEtudiants(data); // Met à jour l'état avec les données
+      setEtudiants(data.etudiants); // Met à jour l'état avec les données
     } catch (err) {
       setError("Impossible de charger les données : " + err.message); // Stocke le message d'erreur
     } finally {
@@ -211,7 +211,7 @@ const EtudiantList = () => {
                   <th>ID</th>
                   <th>Nom</th>
                   <th>Prénom</th>
-                  <th>Auto Ecole</th>
+                  <th>Scolarité</th>
                   <th>Motif</th>
                   <th>Créé il y a</th>
                   <th>M-A-J il y a</th>
@@ -234,7 +234,13 @@ const EtudiantList = () => {
                         <td>ETU-{etudiant.id}</td>
                         <td>{etudiant.nom}</td>
                         <td>{etudiant.prenom}</td>
-                        <td>{etudiant.nom_autoEc}</td>
+                        <td>
+                          {etudiant.montant_paye >= etudiant.scolarite ? (
+                            <span className="badge bg-success">Soldé</span>
+                          ) : (
+                            <span className="badge bg-danger">Pas soldé</span>
+                          )}
+                        </td>
                         <td
                           className={`text-center text-capitalize ${
                             etudiant.motif_inscription === "permis"

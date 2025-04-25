@@ -73,7 +73,7 @@ const Login = () => {
             <div className="formBx bg-body">
               <img src={logo} alt="Logo" />
               <form onSubmit={login}>
-                <h2>Connexion</h2>
+                <h2 className="h2 text-primary">Connexion</h2>
                 <label htmlFor="Pseudo">Pseudo</label>
                 <input
                   type="text"
@@ -92,6 +92,7 @@ const Login = () => {
                 />
                 <input
                   type="submit"
+                  className="btn btn-primary"
                   value={loading ? "Connexion ..." : "Connexion"}
                   disabled={loading}
                 />

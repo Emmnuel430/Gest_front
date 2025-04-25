@@ -97,7 +97,7 @@ const Etudiant = () => {
   return (
     <Layout>
       <Back>etudiants</Back>
-      <section className="bg-white">
+      <section className="bg-body">
         <div className="container">
           <div
             className="row"

@@ -81,7 +81,7 @@ const EtudiantUpdate = () => {
       if (!response.ok)
         throw new Error("Erreur lors du chargement des moniteurs.");
       const data = await response.json();
-      setMoniteurs(data); // Mettre à jour la liste des moniteurs
+      setMoniteurs(data.moniteurs); // Mettre à jour la liste des moniteurs
     } catch (error) {
       console.error("Erreur :", error.message);
       setError("Erreur :" + error.message);

@@ -87,7 +87,7 @@ const Recents = () => {
                           {etudiant.montant_paye >= etudiant.scolarite ? (
                             <span className="badge bg-success">Soldé</span>
                           ) : (
-                            <span className="badge bg-warning">Pas soldé</span>
+                            <span className="badge bg-danger">Pas soldé</span>
                           )}
                         </td>
                         <td>

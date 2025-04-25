@@ -68,7 +68,7 @@ const AddEtudiant = () => {
         categorySet.size === 5:
         return 150000; // ABCDE
       default:
-        return categories.length * 20000; // Chaque catégorie coûte 20k si non définie
+        return categories.length * 25000; // Chaque catégorie coûte 20k si non définie
     }
   };
 
@@ -489,7 +489,7 @@ const AddEtudiant = () => {
 
         {/* Montant */}
         <div className="form-group mb-3">
-          {/* Montant payé */}
+          {/* Scolarité */}
           <label htmlFor="scolarite" className="form-label">
             Montant à payer*
           </label>

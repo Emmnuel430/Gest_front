@@ -35,8 +35,8 @@ const Logs = () => {
           throw new Error("Erreur lors de la récupération des logs");
         }
         const data = await response.json();
-        setAllLogs(data.data || []);
-        setFilteredLogs(data.data || []); // Initialement, tous les logs
+        setAllLogs(data.logs.data || []);
+        setFilteredLogs(data.logs.data || []); // Initialement, tous les logs
       } catch (err) {
         setError("Impossible de charger les données : " + err.message);
       } finally {

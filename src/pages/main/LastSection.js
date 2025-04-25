@@ -78,7 +78,7 @@ const LastSection = () => {
       }
       const data = await response.json(); // Parse les données JSON
       // console.log(data);
-      setLogs(data);
+      setLogs(data.logs);
     } catch (err) {
       setError("Impossible de charger les données : " + err.message); // Stocke le message d'erreur
     } finally {
@@ -152,12 +152,12 @@ const LastSection = () => {
             <div className="col-sm-12 col-md-6 col-xl-4">
               <div className="h-100 bg-body rounded p-4">
                 <div className="d-flex align-items-center justify-content-between mb-2">
-                  <h6 className="mb-0">Dernières alertes</h6>
+                  <h6 className="mb-0">Alertes</h6>
                   <Link to="/rappels">Voir</Link>
                 </div>
                 {rappelsImportant.length > 0 ? (
                   rappelsImportant
-                    .slice(0, 5) // Limite à 3 rappels
+                    .slice(0, 3) // Limite à 3 rappels
                     .map((rappel, index) => (
                       <div
                         key={index}

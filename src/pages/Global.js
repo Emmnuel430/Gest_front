@@ -110,7 +110,7 @@ const Global = () => {
         setCategorieData(formatCategorieData(categorieJson.data));
         setMoniteurData(formatMoniteurData(moniteurJson.data));
         setEtapesData(formatEtapesData(etapesJson.data));
-        setTotaux(totauxJson.data);
+        setTotaux(totauxJson);
         setReductionData(formatReductionData(reductionJson.data)); // Mise à jour des données de réduction
       } catch (err) {
         // Gestion des erreurs
@@ -163,7 +163,13 @@ const Global = () => {
       {
         label: "", // Un seul label fixe
         data: data.map((item) => item.count),
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#FF9F40, #9966FF",
+        ],
       },
     ],
   });
@@ -177,7 +183,14 @@ const Global = () => {
       {
         label: "Nombre d'étudiants",
         data: data.map((item) => item.count),
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#FF9F40",
+          "#9966FF",
+        ],
       },
     ],
   });
@@ -212,6 +225,64 @@ const Global = () => {
     ],
   });
 
+  const renderCard = ({ icon, color, title, value, subtitle }) => (
+    <div className="col-sm-6 col-xl-3" key={title}>
+      <div className="bg-body rounded d-flex align-items-center justify-content-between p-4 border shadow-sm h-100">
+        <i className={`fa ${icon} fa-3x text-${color}`}></i>
+        <div className="ms-3">
+          <div className="mb-2">{title}</div>
+          <h6 className="mb-0 h2 text-center">
+            {value}
+            {subtitle && (
+              <>
+                <br />
+                <small className="text-muted fs-6">{subtitle}</small>
+              </>
+            )}
+          </h6>
+        </div>
+      </div>
+    </div>
+  );
+
+  const total = totaux?.totalEtudiants || 0;
+  const soldé = totaux?.etudiantsSoldes || 0;
+  const nonSoldé = total - soldé;
+
+  const cards = [
+    {
+      icon: "fa-coins",
+      color: "primary",
+      title: "Revenu total (FCFA)",
+      value: totaux?.totalMontantPaye ? (
+        new Intl.NumberFormat("fr-FR").format(
+          Math.trunc(totaux.totalMontantPaye)
+        )
+      ) : (
+        <span className="text-muted">00</span>
+      ),
+    },
+    {
+      icon: "fa-users",
+      color: "primary",
+      title: "Nombre d'Étudiants",
+      value: total || <span className="text-muted">00</span>,
+    },
+    {
+      icon: "fa-user-times",
+      color: "danger",
+      title: "Non soldé",
+      value: `${nonSoldé}`,
+      subtitle: `${Math.round((nonSoldé / total) * 100 || 0)}%`,
+    },
+    {
+      icon: "fa-user-cog",
+      color: "primary",
+      title: "Nombre d'Utilisateurs",
+      value: totaux?.totalUsers ?? <span className="text-muted">00</span>,
+    },
+  ];
+
   return (
     <Layout>
       <div className="container mt-2">
@@ -230,75 +301,7 @@ const Global = () => {
         ) : (
           <>
             {/* Section Totaux */}
-            <div className="row g-4 mb-4">
-              {/* Carte pour le revenu total */}
-              <div className="col-sm-6 col-xl-3">
-                <div className="bg-body rounded d-flex align-items-center justify-content-between p-4">
-                  <i className="fa fa-coins fa-3x text-primary"></i>
-                  <div className="ms-3">
-                    <div className="mb-2">Revenu total (FCFA)</div>
-                    <h6 className="mb-0 h2 text-center">
-                      <strong>
-                        <em>
-                          {totaux?.totalMontantPaye ? (
-                            new Intl.NumberFormat("fr-FR", {
-                              useGrouping: true,
-                            }).format(Math.trunc(totaux.totalMontantPaye))
-                          ) : (
-                            <span className="text-muted">00</span>
-                          )}
-                        </em>
-                      </strong>
-                    </h6>
-                  </div>
-                </div>
-              </div>
-
-              {/* Carte pour le nombre total d'étudiants */}
-              <div className="col-sm-6 col-xl-3">
-                <div className="bg-body rounded d-flex align-items-center justify-content-between p-4">
-                  <i className="fa fa-users fa-3x text-primary"></i>
-                  <div className="ms-3">
-                    <div className="mb-2">Nombre d'Étudiants</div>
-                    <h6 className="mb-0 h2 text-center">
-                      {totaux?.totalEtudiants ?? (
-                        <span className="text-muted">00</span>
-                      )}
-                    </h6>
-                  </div>
-                </div>
-              </div>
-
-              {/* Carte pour le nombre total de moniteurs */}
-              <div className="col-sm-6 col-xl-3">
-                <div className="bg-body rounded d-flex align-items-center justify-content-between p-4">
-                  <i className="fa fa-chalkboard-teacher fa-3x text-primary"></i>
-                  <div className="ms-3">
-                    <div className="mb-2">Nombre de Moniteurs</div>
-                    <h6 className="mb-0 h2 text-center">
-                      {totaux?.totalMoniteurs ?? (
-                        <span className="text-muted">00</span>
-                      )}
-                    </h6>
-                  </div>
-                </div>
-              </div>
-
-              {/* Carte pour le nombre total d'utilisateurs */}
-              <div className="col-sm-6 col-xl-3">
-                <div className="bg-body rounded d-flex align-items-center justify-content-between p-4">
-                  <i className="fa fa-user-cog fa-3x text-primary"></i>
-                  <div className="ms-3">
-                    <div className="mb-2">Nombre d'Utilisateurs</div>
-                    <h6 className="mb-0 h2 text-center">
-                      {totaux?.totalUsers ?? (
-                        <span className="text-muted">00</span>
-                      )}
-                    </h6>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div className="row g-4 mb-4">{cards.map(renderCard)}</div>
 
             {/* Section Graphiques */}
             <div className="row g-4">
