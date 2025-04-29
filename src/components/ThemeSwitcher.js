@@ -58,7 +58,7 @@ function ThemeSwitcher() {
         className="nav-link dropdown-toggle"
         onClick={(e) => e.preventDefault()}
       >
-        <i className="fa fa-bell me-lg-2"></i>
+        <i className="fa fa-adjust me-lg-2"></i>
         <span className="d-none d-lg-inline-flex items text-body">Thème</span>
       </a>
       <div className="dropdown-menu dropdown-menu-end bg-body border-0 rounded-bottom m-0 p-2">

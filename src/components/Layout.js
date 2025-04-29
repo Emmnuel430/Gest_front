@@ -70,14 +70,14 @@ const Layout = ({ children }) => {
           >
             <i className="fa fa-bars"></i>
           </button>
-          {/* Formulaire de recherche (caché sur mobile) */}
+          {/* Formulaire de recherche (caché sur mobile) 
           <form className="d-none d-md-flex ms-4">
             <input
               type="search"
               className="form-control border-0"
               placeholder="Search"
             />
-          </form>
+          </form> */}
           {/* Section de la barre de navigation avec notifications et messages */}
           <div className="navbar-nav align-items-center ms-auto">
             {/* Notification d'alertes */}
@@ -142,7 +142,7 @@ const Layout = ({ children }) => {
         </nav>
 
         {/* Contenu dynamique de la page, qui sera fourni par le parent (via 'children') */}
-        {children}
+        <div className="p-2">{children}</div>
         <br />
         <br />
       </div>

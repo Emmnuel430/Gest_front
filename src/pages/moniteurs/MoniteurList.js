@@ -7,6 +7,7 @@ import Loader from "../../components/Loader";
 import Layout from "../../components/Layout";
 import ConfirmPopup from "../../components/ConfirmPopup";
 import HeaderWithFilter from "../../components/HeaderWithFilter";
+import SearchBar from "../../components/SearchBar"; // Composant pour la barre de recherche
 
 const MoniteurList = () => {
   // États pour stocker les moniteurs, le statut de chargement et les erreurs
@@ -19,6 +20,7 @@ const MoniteurList = () => {
   const [filter, setFilter] = useState(""); // Filtre pour les spécialités
   const [sortOption, setSortOption] = useState(""); // Option de tri
   const [sortedMoniteurs, setSortedMoniteurs] = useState([]); // Liste triée des moniteurs
+  const [searchQuery, setSearchQuery] = useState(""); // Requête de recherche pour filtrer les users
 
   // États pour gérer la suppression des moniteurs
   const [showModal, setShowModal] = useState(false);
@@ -149,6 +151,13 @@ const MoniteurList = () => {
     return shortened; // Retourne la version abrégée
   };
 
+  const filteredMoniteurs = sortedMoniteurs.filter(
+    (moniteur) =>
+      (!filter || moniteur.specialite === filter) &&
+      (moniteur.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        moniteur.prenom.toLowerCase().includes(searchQuery.toLowerCase())) // Filtre par nom ou prénom
+  );
+
   return (
     <Layout>
       <div className="container mt-2">
@@ -165,12 +174,22 @@ const MoniteurList = () => {
           </div>
         ) : (
           <>
+            {/* Barre de recherche */}
+            <SearchBar
+              placeholder="Rechercher un moniteur..."
+              onSearch={(query) => setSearchQuery(query)}
+              delay={300}
+            />
             {/* Barre de filtre et ajout de moniteur */}
             <HeaderWithFilter
               title="Moniteurs"
               link="/add/moniteur"
-              linkText="+ Ajouter"
-              main={moniteurs.length || null}
+              linkText="Ajouter"
+              main={
+                sortedMoniteurs.filter(
+                  (moniteur) => !filter || moniteur.specialite === filter
+                ).length || null
+              }
               filter={filter}
               setFilter={setFilter}
               filterOptions={[
@@ -201,61 +220,55 @@ const MoniteurList = () => {
               </thead>
 
               <tbody>
-                {sortedMoniteurs.filter(
-                  (moniteur) => !filter || moniteur.specialite === filter
-                ).length > 0 ? (
-                  sortedMoniteurs
-                    .filter(
-                      (moniteur) => !filter || moniteur.specialite === filter
-                    )
-                    .map((moniteur, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>moni-{moniteur.id}</td>
-                        <td>{moniteur.nom}</td>
-                        <td>{moniteur.prenom}</td>
-                        <td
-                          className={`text-uppercase ${
-                            moniteur.specialite === "code"
-                              ? "bg-info"
-                              : "bg-warning"
-                          } text-white`}
+                {filteredMoniteurs.length > 0 ? (
+                  filteredMoniteurs.map((moniteur, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>moni-{moniteur.id}</td>
+                      <td>{moniteur.nom}</td>
+                      <td>{moniteur.prenom}</td>
+                      <td
+                        className={`text-uppercase ${
+                          moniteur.specialite === "code"
+                            ? "bg-info"
+                            : "bg-warning"
+                        } text-white`}
+                      >
+                        {moniteur.specialite}
+                      </td>
+                      <td>{formatDateRelative(moniteur.created_at)}</td>
+                      <td>
+                        {moniteur.created_at === moniteur.updated_at
+                          ? "-"
+                          : formatDateRelative(moniteur.updated_at)}
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => navigate(`/moniteur/${moniteur.id}`)}
+                          className="btn btn-info btn-sm me-2"
+                          title="Voir"
                         >
-                          {moniteur.specialite}
-                        </td>
-                        <td>{formatDateRelative(moniteur.created_at)}</td>
-                        <td>
-                          {moniteur.created_at === moniteur.updated_at
-                            ? "-"
-                            : formatDateRelative(moniteur.updated_at)}
-                        </td>
-                        <td>
-                          <button
-                            onClick={() => navigate(`/moniteur/${moniteur.id}`)}
-                            className="btn btn-info btn-sm me-2"
-                            title="Voir"
-                          >
-                            <i className="fas fa-eye"></i>
-                          </button>
-                          <button
-                            onClick={() =>
-                              navigate(`/update/moniteur/${moniteur.id}`)
-                            }
-                            className="btn btn-warning btn-sm me-2"
-                            title="Modifier"
-                          >
-                            <i className="fas fa-edit"></i>
-                          </button>
-                          <button
-                            onClick={() => handleOpenModal(moniteur)}
-                            className="btn btn-danger btn-sm"
-                            title="Supprimer"
-                          >
-                            <i className="fas fa-trash"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                          <i className="fas fa-eye"></i>
+                        </button>
+                        <button
+                          onClick={() =>
+                            navigate(`/update/moniteur/${moniteur.id}`)
+                          }
+                          className="btn btn-warning btn-sm me-2"
+                          title="Modifier"
+                        >
+                          <i className="fas fa-edit"></i>
+                        </button>
+                        <button
+                          onClick={() => handleOpenModal(moniteur)}
+                          className="btn btn-danger btn-sm"
+                          title="Supprimer"
+                        >
+                          <i className="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))
                 ) : (
                   <tr>
                     <td colSpan="8" className="text-center">

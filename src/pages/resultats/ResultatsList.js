@@ -5,6 +5,7 @@ import ConfirmPopup from "../../components/ConfirmPopup"; // Composant popup pou
 import HeaderWithFilter from "../../components/HeaderWithFilter"; // Composant affichant un en-tête avec filtre de recherche
 import Loader from "../../components/Loader"; // Composant pour afficher un spinner de chargement
 import { format } from "date-fns"; // Utilisation de la librairie date-fns pour formater les dates
+import SearchBar from "../../components/SearchBar"; // Composant pour la barre de recherche
 
 const Resultats = () => {
   // Définition des états nécessaires à l'application
@@ -18,6 +19,7 @@ const Resultats = () => {
   const [actionType, setActionType] = useState(""); // Type d'action (retirer ou supprimer)
   const [sortOption, setSortOption] = useState(""); // Option de tri
   const [sortedResultats, setSortedResultats] = useState([]); // Liste triée des résultats
+  const [searchQuery, setSearchQuery] = useState(""); // Requête de recherche pour filtrer les users
 
   // Hook useEffect pour charger les résultats dès le premier rendu du composant
   useEffect(() => {
@@ -41,7 +43,6 @@ const Resultats = () => {
   // Fonction pour ouvrir le modal de détails d'un résultat
   const handleShowDetails = (resultat) => {
     setSelectedResultat(resultat);
-    console.log(resultat);
 
     setShowDetailsModal(true);
   };
@@ -165,6 +166,12 @@ const Resultats = () => {
     return number.replace(/(\d{2})(?=(\d{2})+(?!\d))/g, "$1 "); // Formate le numéro en groupes de 2 chiffres
   };
 
+  const filteredResultats = sortedResultats.filter(
+    (resultat) =>
+      resultat.etudiant.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      resultat.etudiant.prenom.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <Layout>
       <div className="container mt-2">
@@ -179,10 +186,17 @@ const Resultats = () => {
           </div>
         ) : (
           <>
+            {/* Barre de recherche */}
+            <SearchBar
+              placeholder="Rechercher un résultat..."
+              onSearch={(query) => setSearchQuery(query)}
+              delay={300}
+            />
+            {/* En-tête avec filtre et tri */}
             <HeaderWithFilter
               title="Résultats"
               link="/add/resultat"
-              linkText="+ Ajouter"
+              linkText="Ajouter"
               main={resultats.length || null}
               filter={filter}
               setFilter={setFilter}
@@ -216,14 +230,14 @@ const Resultats = () => {
                 </tr>
               </thead>
               <tbody>
-                {sortedResultats.length === 0 ? (
+                {filteredResultats.length === 0 ? (
                   <tr>
                     <td colSpan="9" className="text-center">
                       Aucune donnée trouvée.
                     </td>
                   </tr>
                 ) : (
-                  sortedResultats
+                  filteredResultats
                     .filter(
                       (resultat) => !filter || resultat.libelle === filter
                     ) // Applique le filtre

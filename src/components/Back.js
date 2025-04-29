@@ -11,7 +11,8 @@ const Back = ({ children }) => {
     <div>
       <button onClick={back} className="btn btn-primary">
         {" "}
-        ⬅ Retour
+        <span className="d-none d-sm-inline">⬅ Retour</span>
+        <span className="d-inline d-sm-none">⬅</span>
       </button>
     </div>
   );

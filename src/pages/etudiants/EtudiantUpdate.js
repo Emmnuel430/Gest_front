@@ -196,7 +196,7 @@ const EtudiantUpdate = () => {
       // Vérifier si la mise à jour a réussi
       if (response.ok) {
         alert("Données mises à jour avec succès !");
-        navigate("/etudiants"); // Rediriger vers la liste des étudiants
+        navigate("/etudiant/" + id); // Rediriger vers la liste des étudiants
       } else {
         // Gérer les erreurs de la réponse
         const errorResponse = await response.json();
@@ -288,16 +288,27 @@ const EtudiantUpdate = () => {
             <br />
             <div className="form-group">
               <label>Ajouter au montant payé</label>
-              <input
-                type="number"
-                name="montant_paye"
-                className="form-control"
-                placeholder="Ajouter un montant au paiement"
-                value={montantPaye || ""}
-                onChange={(e) =>
-                  setMontantPaye(parseFloat(e.target.value) || 0)
-                }
-              />
+              <div className="input-group">
+                <input
+                  type="number"
+                  name="montant_paye"
+                  className="form-control"
+                  placeholder="Ajouter un montant au paiement"
+                  value={montantPaye || ""}
+                  onChange={(e) =>
+                    setMontantPaye(parseFloat(e.target.value) || 0)
+                  }
+                />
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={() =>
+                    setMontantPaye(etudiant.scolarite - etudiant.montant_paye)
+                  }
+                >
+                  Soldé
+                </button>
+              </div>
             </div>
           </>
         ) : (

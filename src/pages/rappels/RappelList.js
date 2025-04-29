@@ -103,7 +103,7 @@ const Rappels = () => {
             <HeaderWithFilter
               title2="Rappels"
               link="#"
-              linkText2="+ Ajouter"
+              linkText2="Ajouter"
               onLinkClick={handleOpenAddModal}
             />
             <div>

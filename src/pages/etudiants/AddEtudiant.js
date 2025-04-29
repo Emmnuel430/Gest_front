@@ -50,6 +50,8 @@ const AddEtudiant = () => {
 
     // Utilisation de switch pour les combinaisons
     switch (true) {
+      case categorySet.has("A") && categorySet.size === 1:
+        return 30000; // A
       case categorySet.has("A") &&
         categorySet.has("B") &&
         categorySet.size === 2:
@@ -165,6 +167,8 @@ const AddEtudiant = () => {
         idUser: userId,
       };
 
+      console.log(JSON.stringify(etudiant));
+
       // Envoi des données à l'API
       let result = await fetch(
         `${process.env.REACT_APP_API_BASE_URL}/add_etudiant`,
@@ -181,7 +185,7 @@ const AddEtudiant = () => {
       result = await result.json();
 
       if (result.error) {
-        setError(result.error); // Affiche les erreurs retournées par l'API
+        setError(result.error, result.details); // Affiche les erreurs retournées par l'API
         setLoading(false);
         return;
       }
@@ -465,16 +469,16 @@ const AddEtudiant = () => {
         {/* Champ Catégories */}
         <div className="form-group mb-3">
           <label>Catégories de permis*</label>
-          {["A", "B", "C", "D", "E"].map((category) => (
+          {["A", "B", "AB", "BCDE", "ABCDE", "CDE"].map((category) => (
             <div className="form-check" key={category}>
               <input
-                type="checkbox"
+                type="radio"
                 id={`category-${category}`}
+                name="permis-category"
                 className="form-check-input"
-                onChange={(e) =>
-                  handleCategoryChange(category, e.target.checked)
-                }
-                checked={selectedCategories.includes(category)}
+                value={category}
+                onChange={(e) => setSelectedCategories(e.target.value)}
+                checked={selectedCategories === category}
                 disabled={motifInscription === "recyclage"}
               />
               <label

@@ -72,7 +72,7 @@ const AddResultat = () => {
       if (!response.ok)
         throw new Error("Erreur lors du chargement des étudiants.");
       const data = await response.json();
-      setEtudiants(data);
+      setEtudiants(data.etudiants);
     } catch {
       setError("Erreur lors du chargement des étudiants");
     }
@@ -179,6 +179,7 @@ const AddResultat = () => {
         </label>
         <Select
           id="idEtudiant"
+          className="bg-body"
           options={filteredEtudiants}
           value={filteredEtudiants.find((e) => e.value === resultat.idEtudiant)}
           onChange={(selectedOption) =>

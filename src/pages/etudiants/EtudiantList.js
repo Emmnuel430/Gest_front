@@ -8,6 +8,7 @@ import Layout from "../../components/Layout";
 import ConfirmPopup from "../../components/ConfirmPopup";
 import HeaderWithFilter from "../../components/HeaderWithFilter";
 import Loader from "../../components/Loader";
+import SearchBar from "../../components/SearchBar";
 
 // Définition du composant principal
 const EtudiantList = () => {
@@ -23,6 +24,7 @@ const EtudiantList = () => {
   const location = useLocation(); // Localisation actuelle (pour recharger les données)
   const [filter, setFilter] = useState(""); // Filtre pour les étudiants
   const [showModal, setShowModal] = useState(false); // Contrôle l'affichage du modal de confirmation
+  const [searchQuery, setSearchQuery] = useState(""); // Requête de recherche pour filtrer les étudiants
   const navigate = useNavigate(); // Navigation entre les pages
 
   // Effet pour charger les étudiants et mettre à jour le temps périodiquement
@@ -162,6 +164,14 @@ const EtudiantList = () => {
     return shortened; // Retourne la version abrégée
   };
 
+  //
+  const filteredEtudiants = sortedEtudiants.filter(
+    (etudiant) =>
+      (!filter || etudiant.motif_inscription === filter) &&
+      (etudiant.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        etudiant.prenom.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
   // Rendu du composant
   return (
     <Layout>
@@ -179,12 +189,22 @@ const EtudiantList = () => {
           </div>
         ) : (
           <>
+            {/* Barre de recherche */}
+            <SearchBar
+              placeholder="Rechercher un étudiant..."
+              onSearch={(query) => setSearchQuery(query)}
+              delay={300}
+            />
             {/* En-tête avec filtre */}
             <HeaderWithFilter
               title="Étudiants"
               link="/add/etudiant"
-              linkText="+ Ajouter"
-              main={etudiants.length || null}
+              linkText="Ajouter"
+              main={
+                sortedEtudiants.filter(
+                  (etudiant) => !filter || etudiant.motif_inscription === filter
+                ).length || null
+              }
               filter={filter}
               setFilter={setFilter}
               filterOptions={[
@@ -220,14 +240,14 @@ const EtudiantList = () => {
               </thead>
               <tbody>
                 {/* Filtrage et affichage des étudiants */}
-                {sortedEtudiants.filter(
-                  (etudiant) => !filter || etudiant.motif_inscription === filter
-                ).length > 0 ? (
-                  sortedEtudiants
-                    .filter(
-                      (etudiant) =>
-                        !filter || etudiant.motif_inscription === filter
-                    )
+                {filteredEtudiants.length > 0 ? (
+                  filteredEtudiants
+                    .sort((a, b) => {
+                      const aSolde = a.montant_paye == a.scolarite;
+                      const bSolde = b.montant_paye == b.scolarite;
+                      if (aSolde === bSolde) return 0;
+                      return aSolde ? 1 : -1; // Si a est soldé, il passe en bas
+                    })
                     .map((etudiant, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
@@ -235,7 +255,7 @@ const EtudiantList = () => {
                         <td>{etudiant.nom}</td>
                         <td>{etudiant.prenom}</td>
                         <td>
-                          {etudiant.montant_paye >= etudiant.scolarite ? (
+                          {etudiant.montant_paye == etudiant.scolarite ? (
                             <span className="badge bg-success">Soldé</span>
                           ) : (
                             <span className="badge bg-danger">Pas soldé</span>

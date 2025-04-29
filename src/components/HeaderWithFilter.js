@@ -86,7 +86,8 @@ const HeaderWithFilter = ({
         <div>
           {linkText && (
             <Link to={link} className="btn btn-primary me-2">
-              {linkText}
+              <span className="d-none d-sm-inline">{linkText}</span>
+              <span className="d-inline d-sm-none">+</span>
             </Link>
           )}
           {onLinkClick && (
@@ -97,7 +98,8 @@ const HeaderWithFilter = ({
                 if (onLinkClick) onLinkClick();
               }}
             >
-              {linkText2}
+              <span className="d-none d-sm-inline">{linkText2}</span>
+              <span className="d-inline d-sm-none">+</span>
             </button>
           )}
         </div>

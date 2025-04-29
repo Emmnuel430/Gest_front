@@ -30,6 +30,7 @@ const Moniteur = () => {
 
         const data = await response.json(); // Conversion des données en JSON
         setMoniteur(data); // Mise à jour de l'état avec les données du moniteur
+        console.log(data); // Affichage des données dans la console pour le débogage
       } catch (err) {
         setError("Impossible de charger les données : " + err.message); // Gestion des erreurs
       } finally {
@@ -64,28 +65,82 @@ const Moniteur = () => {
     );
   }
 
+  const formatPhoneNumber = (number) => {
+    return number.replace(/(\d{2})(?=(\d{2})+(?!\d))/g, "$1 ");
+  };
   // Affichage des données du moniteur
   return (
     <Layout>
-      <Back>moniteurs</Back>{" "}
       {/* Bouton pour revenir à la liste des moniteurs */}
-      <div className="container mt-5">
+      <div className="container py-2">
+        <Back>moniteurs</Back>{" "}
         {moniteur ? (
           <>
             {/* Section des détails du moniteur */}
-            <div className="card shadow-sm mb-4">
-              <div className="card-body">
-                <h2 className="card-title">Détails du moniteur</h2>
-                <hr />
-                <p className="text-capitalize">
-                  <strong>Nom : </strong> {moniteur.moniteur.nom}
-                </p>
-                <p className="text-capitalize">
-                  <strong>Prénom : </strong> {moniteur.moniteur.prenom}
-                </p>
-                <p className="text-capitalize">
-                  <strong>Spécialité : </strong> {moniteur.moniteur.specialite}
-                </p>
+            <div className="card card-style1 border my-2">
+              <div className="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                <div className="row align-items-center">
+                  {/* Section : Icône */}
+                  <div className="col-lg-6 mb-4 mb-lg-0 text-center">
+                    <div
+                      className="d-inline-flex align-items-center justify-content-center bg-light rounded-circle"
+                      style={{ width: "120px", height: "120px" }}
+                    >
+                      {moniteur.moniteur.specialite === "conduite" ? (
+                        <i className="fa fa-car fa-3x text-primary"></i>
+                      ) : (
+                        <i className="fa fa-chalkboard fa-3x text-primary"></i>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Section : Infos du moniteur */}
+                  <div className="col-lg-6 px-xl-10">
+                    <div className="d-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
+                      <h3 className="h2 text-primary mb-0">
+                        <span className="text-capitalize">
+                          {moniteur.moniteur.nom} {moniteur.moniteur.prenom}
+                        </span>
+                      </h3>
+                      <h6 className="h4 text-primary mb-0 text-capitalize">
+                        Spécialité : {moniteur.moniteur.specialite}
+                      </h6>
+                    </div>
+
+                    <ul className="list-unstyled mb-1-9 mt-3">
+                      <li className="mb-2 display-28">
+                        <span className="text-secondary me-2 font-weight-600">
+                          Téléphone :
+                        </span>
+                        {formatPhoneNumber(moniteur.moniteur.num_telephone) ??
+                          "Non disponible"}
+                      </li>
+
+                      {moniteur.moniteur.num_telephone_2 && (
+                        <li className="mb-2 display-28">
+                          <span className="text-secondary me-2 font-weight-600">
+                            Téléphone Secondaire :
+                          </span>
+                          {formatPhoneNumber(moniteur.moniteur.num_telephone_2)}
+                        </li>
+                      )}
+
+                      <li className="mb-2 display-28">
+                        <span className="text-secondary me-2 font-weight-600">
+                          Email :
+                        </span>
+                        {moniteur.moniteur.email ?? "Non renseigné"}
+                      </li>
+
+                      <li className="mb-2 display-28">
+                        <span className="text-secondary me-2 font-weight-600">
+                          Commune :
+                        </span>
+                        {moniteur.moniteur.commune ?? "Non renseignée"}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -96,7 +151,7 @@ const Moniteur = () => {
                   <h3 className="card-title">Liste de ses étudiants</h3>
                   <hr />
                   <Table className="" hover responsive>
-                    <thead className="table-light">
+                    <thead className="table-body">
                       <tr>
                         <th>#</th>
                         <th>Nom</th>

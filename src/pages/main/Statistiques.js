@@ -51,7 +51,7 @@ const Statistiques = () => {
             {/* Carte pour le revenu total */}
             <div className="col-sm-6 col-xl-3">
               <Link to="/global" className="text-decoration-none">
-                <div className="bg-body h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
+                <div className="bg-body h-100 rounded border text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
                   <i className="fa fa-coins fa-3x text-primary"></i>
                   <div className="ms-3">
                     <div className="mb-2 text-body">Revenu total (FCFA)</div>
@@ -73,7 +73,7 @@ const Statistiques = () => {
             {/* Carte pour le nombre total d'étudiants */}
             <div className="col-sm-6 col-xl-3">
               <Link to="/etudiants" className="text-decoration-none">
-                <div className="bg-body h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
+                <div className="bg-body h-100 rounded border text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
                   <i className="fa fa-users fa-3x text-primary"></i>
                   <div className="ms-3">
                     <div className="mb-2 text-body">Nombre d'Étudiants</div>
@@ -87,7 +87,7 @@ const Statistiques = () => {
             {/* Carte pour le nombre total de moniteurs */}
             <div className="col-sm-6 col-xl-3">
               <Link to="/etudiants" className="text-decoration-none">
-                <div className="bg-body h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
+                <div className="bg-body h-100 rounded border text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
                   <i className="fa fa-chalkboard fa-3x text-primary"></i>
                   <div className="ms-3">
                     <div className="mb-2 text-body">Etudiants au code</div>
@@ -101,7 +101,7 @@ const Statistiques = () => {
             {/* Carte pour le nombre total d'utilisateurs */}
             <div className="col-sm-6 col-xl-3">
               <Link to="/etudiants" className="text-decoration-none">
-                <div className="bg-body h-100 rounded text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
+                <div className="bg-body h-100 rounded border text-dark d-flex align-items-center justify-content-between p-4 hover-shadow">
                   <i className="fa fa-car fa-3x text-primary"></i>
                   <div className="ms-3">
                     <div className="mb-2 text-body">

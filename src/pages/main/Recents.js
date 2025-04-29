@@ -69,37 +69,45 @@ const Recents = () => {
                       </td>
                     </tr>
                   ) : (
-                    etudiants.map((etudiant) => (
-                      <tr key={etudiant.id}>
-                        <td>etu-{etudiant.id}</td>
-                        <td>{etudiant.nom}</td>
-                        <td>{etudiant.prenom}</td>
-                        <td
-                          className={`text-center text-capitalize ${
-                            etudiant.motif_inscription === "permis"
-                              ? "bg-info"
-                              : "bg-secondary"
-                          } text-white`}
-                        >
-                          {etudiant.motif_inscription}
-                        </td>
-                        <td>
-                          {etudiant.montant_paye >= etudiant.scolarite ? (
-                            <span className="badge bg-success">Soldé</span>
-                          ) : (
-                            <span className="badge bg-danger">Pas soldé</span>
-                          )}
-                        </td>
-                        <td>
-                          <button
-                            className="btn btn-sm btn-primary"
-                            onClick={() => navigate(`/etudiant/${etudiant.id}`)}
+                    etudiants
+                      .sort(
+                        (a, b) =>
+                          new Date(b.created_at) - new Date(a.created_at)
+                      ) // Trie par date de création décroissante
+                      // .sort((a, b) => new Date(b.date_inscription) - new Date(a.date_inscription)) // Trie par date d'inscription décroissante
+                      .map((etudiant) => (
+                        <tr key={etudiant.id}>
+                          <td>etu-{etudiant.id}</td>
+                          <td>{etudiant.nom}</td>
+                          <td>{etudiant.prenom}</td>
+                          <td
+                            className={`text-center text-capitalize ${
+                              etudiant.motif_inscription === "permis"
+                                ? "bg-info"
+                                : "bg-secondary"
+                            } text-white`}
                           >
-                            Voir
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                            {etudiant.motif_inscription}
+                          </td>
+                          <td>
+                            {etudiant.montant_paye >= etudiant.scolarite ? (
+                              <span className="badge bg-success">Soldé</span>
+                            ) : (
+                              <span className="badge bg-danger">Pas soldé</span>
+                            )}
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-sm btn-primary"
+                              onClick={() =>
+                                navigate(`/etudiant/${etudiant.id}`)
+                              }
+                            >
+                              Voir
+                            </button>
+                          </td>
+                        </tr>
+                      ))
                   )}
                 </tbody>
               </table>

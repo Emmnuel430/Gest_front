@@ -5,6 +5,7 @@ import Layout from "../../components/Layout"; // Composant Layout qui contient l
 import HeaderWithFilter from "../../components/HeaderWithFilter"; // Composant pour l'en-tête avec filtre
 import Loader from "../../components/Loader"; // Composant pour le loader
 import ConfirmPopup from "../../components/ConfirmPopup"; // Composant de modal de confirmation pour la suppression d'utilisateur
+import SearchBar from "../../components/SearchBar"; // Composant pour la barre de recherche
 
 const UserList = () => {
   // États locaux pour gérer les utilisateurs, l'état de chargement, les erreurs et les modals
@@ -15,6 +16,7 @@ const UserList = () => {
   const [selectedUser, setSelectedUser] = useState(null); // Utilisateur sélectionné pour suppression
   const [sortOption, setSortOption] = useState(""); // État pour l'option de tri
   const [sortedUsers, setSortedUsers] = useState([]); // Liste des utilisateurs triés
+  const [searchQuery, setSearchQuery] = useState(""); // Requête de recherche pour filtrer les users
   const navigate = useNavigate(); // Hook pour la navigation
 
   // Récupérer l'ID de l'utilisateur connecté à partir du localStorage
@@ -89,6 +91,12 @@ const UserList = () => {
     }
   };
 
+  const filteredUsers = sortedUsers.filter(
+    (user) =>
+      user.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.prenom.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <Layout>
       <div className="container mt-2">
@@ -105,11 +113,17 @@ const UserList = () => {
           </div>
         ) : (
           <>
+            {/* Barre de recherche */}
+            <SearchBar
+              placeholder="Rechercher un utilisateur..."
+              onSearch={(query) => setSearchQuery(query)}
+              delay={300}
+            />
             {/* Affichage de l'en-tête avec filtre et le bouton pour ajouter un utilisateur */}
             <HeaderWithFilter
               title="Utilisateurs"
               link="/register"
-              linkText="+ Ajouter"
+              linkText="Ajouter"
               main={users.length || null}
               sortOption={sortOption}
               setSortOption={setSortOption}
@@ -131,9 +145,9 @@ const UserList = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.length > 0 ? (
+                {filteredUsers.length > 0 ? (
                   // Si des utilisateurs existent, on les affiche dans des lignes de tableau
-                  users.map((user) => (
+                  filteredUsers.map((user) => (
                     <tr key={user.id}>
                       <td>{user.id}</td>
                       <td>{user.nom}</td>

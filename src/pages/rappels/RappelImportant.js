@@ -63,10 +63,34 @@ const RappelImportant = () => {
     return shortened;
   };
 
+  // Variables pour compter les rappels par priorité
+  const rappelsPrioriteElevee = rappels.filter(
+    (rappel) => rappel.priorite === "élevée"
+  ).length;
+  const rappelsPrioriteMoyenne = rappels.filter(
+    (rappel) => rappel.priorite === "moyenne"
+  ).length;
+  const rappelsPrioriteFaible = rappels.filter(
+    (rappel) => rappel.priorite === "basse"
+  ).length;
+
+  const totalRappels = rappels.length;
+
   return (
     <div className="bg-body rounded p-4">
       <div className="d-flex align-items-center justify-content-between mb-2">
-        <h4 className="mb-0">Rappels Importants ({rappels.length})</h4>
+        <p className="mb-0 d-flex align-items-center">
+          <h4 className="mb-0 me-2">Rappels Importants ({totalRappels})</h4>
+          <span className="rounded rounded-circle border border-danger bg-danger-subtle text-danger p-2 me-2">
+            {rappelsPrioriteElevee}
+          </span>
+          <span className="rounded rounded-circle border border-warning bg-warning-subtle text-warning p-2 me-2">
+            {rappelsPrioriteMoyenne}
+          </span>
+          <span className="rounded rounded-circle border border-secondary bg-secondary-subtle text-secondary p-2">
+            {rappelsPrioriteFaible}
+          </span>
+        </p>
         {/* <a href="/rappels-complets">Voir tout</a> */}
       </div>
       {rappels.length === 0 ? (
