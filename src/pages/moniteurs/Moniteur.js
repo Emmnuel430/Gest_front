@@ -166,7 +166,7 @@ const Moniteur = () => {
                           <td>{index + 1}</td>
                           <td>{etudiant.nom}</td>
                           <td>{etudiant.prenom}</td>
-                          <td>{etudiant.num_telephone}</td>
+                          <td>{formatPhoneNumber(etudiant.num_telephone)}</td>
                           <td
                             className={`text-center text-uppercase ${
                               etudiant.motif_inscription == "permis"

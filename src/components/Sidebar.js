@@ -1,6 +1,6 @@
 import React from "react"; // Importation de React pour utiliser JSX et les fonctionnalités React.
-import loginImage from "../assets/img/user.png"; // Importation de l'image de profil par défaut.
-import logo from "../assets/img/Logo_min.PNG"; // Importation du logo de l'application.
+import userImg from "../assets/img/user.png"; // Importation de l'image de profil par défaut.
+import logo from "../assets/img/Logo_min.png"; // Importation du logo de l'application.
 import SidebarLinks from "./SidebarLinks"; // Importation du composant SidebarLinks qui contient les liens de la barre latérale.
 
 const Sidebar = ({ user }) => {
@@ -14,11 +14,11 @@ const Sidebar = ({ user }) => {
           <img
             src={logo} // Affichage du logo de l'application
             alt="Logo"
-            className="rounded-circle"
+            className="rounded-circle bg-body"
             width="40"
             height="40"
           />
-          <h3 className="m-0" style={{ color: "#ed3731" }}>
+          <h3 className="m-0 ps-2" style={{ color: "#ed3731" }}>
             {" "}
             {/* Affichage du titre "Gest v1" */}
             <strong>Gest v1</strong>
@@ -28,7 +28,7 @@ const Sidebar = ({ user }) => {
         <div className="d-flex align-items-center ms-4 mb-4">
           <div className="position-relative">
             <img
-              src={loginImage} // Affichage de l'image de profil par défaut
+              src={userImg} // Affichage de l'image de profil par défaut
               alt="Profile"
               className="rounded-circle"
               width="40"

@@ -41,7 +41,7 @@ const UserUpdate = () => {
         );
       }
       const data = await response.json(); // Parse de la réponse JSON
-      setUser({ ...data, newPassword: "" }); // Mise à jour des données utilisateur
+      setUser({ ...data.user, newPassword: "" }); // Mise à jour des données utilisateur
     } catch (error) {
       setError("Erreur lors de la récupération des données utilisateur.");
     }

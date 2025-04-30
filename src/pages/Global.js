@@ -190,26 +190,41 @@ const Global = () => {
           "#4BC0C0",
           "#FF9F40",
           "#9966FF",
+          "#999999",
         ],
       },
     ],
   });
 
   // Formate les données pour le graphique de répartition par moniteur
-  const formatMoniteurData = (data) => ({
-    labels: data
-      .filter((item) => item.moniteur && item.moniteur.nom) // Filtre les moniteurs valides
-      .map((item) => item.moniteur.nom),
-    datasets: [
-      {
-        label: "Nombre d'étudiants",
-        data: data
-          .filter((item) => item.moniteur && item.moniteur.nom)
-          .map((item) => item.count),
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
-      },
-    ],
-  });
+  const generateDistinctColor = (index, total) => {
+    const hue = Math.floor((360 / total) * index); // répartit sur le cercle colorimétrique
+    return `hsl(${hue}, 70%, 50%)`; // saturation et luminosité fixes pour garder du contraste
+  };
+
+  const formatMoniteurData = (data) => {
+    const filteredData = data.filter(
+      (item) => item.moniteur && item.moniteur.nom
+    );
+
+    // Tri alphabétique pour stabilité des index
+    const sortedData = [...filteredData].sort((a, b) =>
+      a.moniteur.nom.localeCompare(b.moniteur.nom)
+    );
+
+    return {
+      labels: sortedData.map((item) => item.moniteur.nom),
+      datasets: [
+        {
+          label: "Nombre d'étudiants",
+          data: sortedData.map((item) => item.count),
+          backgroundColor: sortedData.map((_, index) =>
+            generateDistinctColor(index, sortedData.length)
+          ),
+        },
+      ],
+    };
+  };
 
   // Formate les données pour le graphique de répartition par réduction
   const formatReductionData = (data) => ({

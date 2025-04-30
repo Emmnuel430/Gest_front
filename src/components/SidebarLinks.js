@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import useRappelCount from "./hooks/useRappelCount";
 
 const SidebarLinks = ({ user }) => {
   const location = useLocation();
+  const totalRappels = useRappelCount();
 
   // Fonction pour vérifier si une route est active
   const isActive = (path) => location.pathname === path;
@@ -58,8 +60,15 @@ const SidebarLinks = ({ user }) => {
               isActiveLink ? "active bg-body-secondary fw-bold" : ""
             }`}
           >
-            <i className={`fa fa-${icon} me-2`}></i>
-            <span className="text-body">{label}</span>
+            <div>
+              <i className={`fa fa-${icon} me-2`}></i>
+              <span className="text-body">{label}</span>
+              {label === "Rappels" && totalRappels > 0 && (
+                <span className="bg-danger-subtle border border-danger rounded-pill p-1 ms-2 text-body">
+                  {totalRappels > 99 ? "99+" : totalRappels}
+                </span>
+              )}
+            </div>
           </Link>
         );
       })}

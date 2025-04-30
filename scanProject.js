@@ -1,52 +1,73 @@
 const fs = require("fs");
 const path = require("path");
 
+const srcDir = path.join(__dirname, "src");
 const outputFilePath = path.join(__dirname, "description.txt");
 
-// Fonction pour scanner un dossier
-function scanDirectory(dir, descriptions = []) {
-  const files = fs.readdirSync(dir);
+const categories = {
+  Racines: [],
+  Components: [],
+  Pages: [],
+};
 
-  files.forEach((file) => {
-    const fullPath = path.join(dir, file);
-    const stats = fs.statSync(fullPath);
+function walk(dirPath) {
+  const entries = fs.readdirSync(dirPath, { withFileTypes: true });
 
-    if (stats.isDirectory()) {
-      // Si c'est un dossier, on le scanne récursivement
-      scanDirectory(fullPath, descriptions);
-    } else if (stats.isFile() && /\.(js|jsx|ts|tsx)$/.test(file)) {
-      // Si c'est un fichier JS/TS, on l'analyse
-      const relativePath = path.relative(__dirname, fullPath);
-      const content = fs.readFileSync(fullPath, "utf-8");
+  entries.forEach((entry) => {
+    const fullPath = path.join(dirPath, entry.name);
+    const relativePath = path.relative(__dirname, fullPath);
 
-      // Détection basique des types de fichiers
-      let type = "Autre";
-      if (content.includes("React") || content.includes("useState")) {
-        type = "Composant React";
-      } else if (
-        content.includes("Route") ||
-        content.includes("react-router")
-      ) {
-        type = "Route";
-      } else if (file.includes("page") || dir.includes("pages")) {
-        type = "Page";
+    if (entry.isDirectory()) {
+      // Exclure node_modules même s’il est dans src (par précaution)
+      if (entry.name !== "node_modules") {
+        walk(fullPath);
       }
+    } else if (entry.isFile() && /\.(js|jsx|ts|tsx)$/.test(entry.name)) {
+      const content = fs.readFileSync(fullPath, "utf-8");
+      const label = `Composant React: ${relativePath.replace(/\\/g, "\\")}`;
 
-      descriptions.push(`${type}: ${relativePath}`);
+      if (relativePath.includes("components")) {
+        categories.Components.push(label);
+      } else if (relativePath.includes("pages")) {
+        categories.Pages.push(label);
+      } else {
+        categories.Racines.push(label);
+      }
     }
   });
-
-  return descriptions;
 }
 
-// Fonction principale
-function generateDescriptionFile() {
-  const descriptions = scanDirectory(__dirname);
+function generateOutput() {
+  const outputLines = [];
 
-  // Écriture dans le fichier description.txt
-  fs.writeFileSync(outputFilePath, descriptions.join("\n"), "utf-8");
-  console.log(`Fichier description.txt généré à : ${outputFilePath}`);
+  const pushCategory = (title, items) => {
+    outputLines.push(`-${title}`);
+    if (title === "Pages") {
+      const grouped = {};
+      items.forEach((item) => {
+        const match = item.match(/pages\\([^\\]+)\\/);
+        const key = match ? match[1] : "Divers";
+        grouped[key] = grouped[key] || [];
+        grouped[key].push(item);
+      });
+
+      for (const section of Object.keys(grouped)) {
+        outputLines.push(...grouped[section]);
+        outputLines.push("--");
+      }
+    } else {
+      outputLines.push(...items);
+    }
+  };
+
+  pushCategory("Racines", categories.Racines);
+  pushCategory("Components", categories.Components);
+  pushCategory("Pages", categories.Pages);
+
+  fs.writeFileSync(outputFilePath, outputLines.join("\n"), "utf-8");
+  console.log(`✅ description.txt généré à : ${outputFilePath}`);
 }
 
-// Exécuter le script
-generateDescriptionFile();
+// Exécuter
+walk(srcDir);
+generateOutput();

@@ -1,13 +1,14 @@
-Composant React: scanProject.js
-
+-Racines
 Composant React: src\App.js
 Composant React: src\assets\js\HomeScript.js
 Composant React: src\index.js
-
+Composant React: src\routes.js
+-Components
 Composant React: src\components\AccessDenied.js
 Composant React: src\components\Back.js
 Composant React: src\components\ConfirmPopup.js
 Composant React: src\components\HeaderWithFilter.js
+Composant React: src\components\hooks\useRappelCount.js
 Composant React: src\components\Layout.js
 Composant React: src\components\Loader.js
 Composant React: src\components\ProgressBar.js
@@ -16,12 +17,16 @@ Composant React: src\components\SearchBar.js
 Composant React: src\components\Sidebar.js
 Composant React: src\components\SidebarLinks.js
 Composant React: src\components\ThemeSwitcher.js
-
-
+-Pages
 Composant React: src\pages\etudiants\AddEtudiant.js
 Composant React: src\pages\etudiants\Etudiant.js
 Composant React: src\pages\etudiants\EtudiantList.js
 Composant React: src\pages\etudiants\EtudiantUpdate.js
+--
+Composant React: src\pages\Global.js
+Composant React: src\pages\Home.js
+Composant React: src\pages\Login.js
+Composant React: src\pages\Logs.js
 --
 Composant React: src\pages\main\Graph.js
 Composant React: src\pages\main\LastSection.js
@@ -51,8 +56,3 @@ Composant React: src\pages\users\Register.js
 Composant React: src\pages\users\UserList.js
 Composant React: src\pages\users\UserUpdate.js
 --
-Composant React: src\pages\Global.js
-Composant React: src\pages\Home.js
-Composant React: src\pages\Login.js
-Composant React: src\pages\Logs.js
-Composant React: src\routes.js
