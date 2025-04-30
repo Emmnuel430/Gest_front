@@ -241,6 +241,7 @@ const Global = () => {
   });
 
   const renderCard = ({ icon, color, title, value, subtitle }) => (
+    // Card pour afficher les totaux
     <div className="col-sm-6 col-xl-3" key={title}>
       <div className="bg-body rounded d-flex align-items-center justify-content-between p-4 border shadow-sm h-100">
         <i className={`fa ${icon} fa-3x text-${color}`}></i>
