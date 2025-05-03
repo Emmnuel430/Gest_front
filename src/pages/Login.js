@@ -42,7 +42,6 @@ const Login = () => {
       });
 
       result = await result.json();
-      console.log("Résultat du backend :", result);
 
       // Gère une réponse d'erreur de l'API
       if (result.error) {
@@ -58,7 +57,7 @@ const Login = () => {
       setLoading(false); // Désactive l'état de chargement
       navigate("/home"); // Redirige vers la page d'accueil ou tableau de bord
     } catch (e) {
-      setError("Une erreur innatendue s'est produite. Réessayez");
+      setError("Une erreur inatendue s'est produite. Réessayez");
       setLoading(false); // Désactive l'état de chargement
     }
   }
@@ -71,6 +70,7 @@ const Login = () => {
               <img src={loginImage} alt="Login Illustration" />
             </div>
             <div className="formBx bg-body">
+              {error && <p>{error}</p>}
               <img src={logo} alt="Logo" />
               <form onSubmit={login}>
                 <h2 className="h2 text-primary">Connexion</h2>
@@ -90,20 +90,25 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <input
-                  type="submit"
-                  className="btn btn-primary"
-                  value={loading ? "Connexion ..." : "Connexion"}
-                  disabled={loading}
-                />
-                &nbsp;
-                {loading ? (
-                  <>
-                    <Spinner animation="border" size="sm" />
-                  </>
-                ) : null}
+                <div className="d-flex align-items-center mt-3">
+                  <input
+                    type="submit"
+                    className="btn btn-primary m-0"
+                    value={loading ? "Connexion ..." : "Connexion"}
+                    disabled={loading}
+                  />
+                  &nbsp;&nbsp;
+                  {loading ? (
+                    <>
+                      <Spinner
+                        animation="border"
+                        size="sm"
+                        className="my-auto"
+                      />
+                    </>
+                  ) : null}
+                </div>
               </form>
-              {error && <p>{error}</p>}
             </div>
           </div>
         </div>

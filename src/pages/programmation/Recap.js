@@ -161,6 +161,9 @@ const Recap = () => {
       "nom_fichier",
       `Prog-${programmation.type}-${programmation.date_prog}.pdf` // Nom du fichier
     );
+    programmation.etudiants.forEach((e, i) => {
+      formData.append(`etudiants[${i}]`, e.value);
+    });
 
     try {
       const response = await fetch(

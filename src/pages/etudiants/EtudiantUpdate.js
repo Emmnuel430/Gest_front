@@ -61,8 +61,13 @@ const EtudiantUpdate = () => {
     { value: "visite_médicale", label: "Visite Médicale" },
     { value: "cours_de_code", label: "Cours de Code" },
     { value: "examen_de_code", label: "Examen de Code" },
+    { value: "programmé_pour_le_code", label: "Programmé pour le code" },
     { value: "cours_de_conduite", label: "Cours de Conduite" },
     { value: "examen_de_conduite", label: "Examen de Conduite" },
+    {
+      value: "programmé_pour_la_conduite",
+      label: "Programmé pour la conduite",
+    },
   ];
 
   // Étapes spécifiques pour le recyclage
@@ -70,6 +75,10 @@ const EtudiantUpdate = () => {
     { value: "inscription", label: "Inscription" },
     { value: "cours_de_conduite", label: "Cours de Conduite" },
     { value: "examen_de_conduite", label: "Examen de Conduite" },
+    {
+      value: "programmé_pour_la_conduite",
+      label: "Programmé pour la conduite",
+    },
   ];
 
   // Fonction pour récupérer les moniteurs disponibles

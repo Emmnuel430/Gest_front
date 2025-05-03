@@ -12,6 +12,7 @@ const ProgrammationList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [filter, setFilter] = useState(""); // Filtre pour les spécialités
   const [selectedProgrammation, setSelectedProgrammation] = useState(null);
   const [sortOption, setSortOption] = useState(null);
   const [sortedProgrammations, setSortedProgrammations] = useState([]);
@@ -24,6 +25,8 @@ const ProgrammationList = () => {
           `${process.env.REACT_APP_API_BASE_URL}/programmations`
         );
         const data = await response.json();
+        console.log(data);
+
         setProgrammations(data.programmations); // Mise à jour de la liste des programmations
         setLoading(false);
       } catch (err) {
@@ -89,6 +92,10 @@ const ProgrammationList = () => {
     );
   };
 
+  const filteredProgs = sortedProgrammations.filter(
+    (prog) => !filter || prog.type === filter // Filtre par nom ou prénom
+  );
+
   return (
     <Layout>
       <div className="container mt-2">
@@ -110,7 +117,14 @@ const ProgrammationList = () => {
               title="Programmations"
               link="/add/programmation"
               linkText="+ Ajouter"
-              main={programmations.length || null}
+              main={filteredProgs.length || null}
+              filter={filter}
+              setFilter={setFilter}
+              filterOptions={[
+                { value: "", label: "Toutes les spécialités" },
+                { value: "code", label: "Code" },
+                { value: "conduite", label: "Conduite" },
+              ]}
               sortOption={sortOption}
               setSortOption={setSortOption}
               dataList={programmations}
@@ -134,8 +148,8 @@ const ProgrammationList = () => {
               </thead>
               <tbody>
                 {/* Affichage des programmations si disponibles */}
-                {sortedProgrammations.length > 0 ? (
-                  sortedProgrammations.map((programmation, index) => (
+                {filteredProgs.length > 0 ? (
+                  filteredProgs.map((programmation, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{programmation.user?.nom || "Inconnu"}</td>

@@ -7,37 +7,57 @@ const ProgressBar = ({ currentStep, motifInscription }) => {
       name: "Inscription",
       key: "inscription",
       color: "primary",
+      bgColor: "primary",
       percentage: 5,
     },
     {
       name: "Visite Médicale",
       key: "visite_médicale",
       color: "warning",
+      bgColor: "warning",
       percentage: 10,
     },
     {
       name: "Cours de Code",
       key: "cours_de_code",
       color: "info",
+      bgColor: "info",
       percentage: 30,
     },
     {
       name: "Examen de Code",
       key: "examen_de_code",
       color: "success",
-      percentage: 15,
+      bgColor: "success",
+      percentage: 10,
+    },
+    {
+      name: "Programmé pour le Code",
+      key: "programmé_pour_le_code",
+      color: "success",
+      bgColor: "success-subtle",
+      percentage: 5,
     },
     {
       name: "Cours de Conduite",
       key: "cours_de_conduite",
       color: "info",
+      bgColor: "info",
       percentage: 25,
     },
     {
       name: "Examen de Conduite",
       key: "examen_de_conduite",
       color: "success",
-      percentage: 15,
+      bgColor: "success",
+      percentage: 10,
+    },
+    {
+      name: "Programmé pour la conduite",
+      key: "programmé_pour_la_conduite",
+      color: "success",
+      bgColor: "success-subtle",
+      percentage: 5,
     },
   ];
 
@@ -47,19 +67,29 @@ const ProgressBar = ({ currentStep, motifInscription }) => {
       name: "Inscription",
       key: "inscription",
       color: "primary",
+      bgColor: "primary",
       percentage: 33,
     },
     {
       name: "Cours de Conduite",
       key: "cours_de_conduite",
       color: "info",
+      bgColor: "info",
       percentage: 33,
     },
     {
       name: "Examen de Conduite",
       key: "examen_de_conduite",
       color: "success",
-      percentage: 34,
+      bgColor: "success",
+      percentage: 30,
+    },
+    {
+      name: "Programmé pour la conduite",
+      key: "programmé_pour_la_conduite",
+      color: "success",
+      bgColor: "success-subtle",
+      percentage: 4,
     },
   ];
 
@@ -109,7 +139,7 @@ const ProgressBar = ({ currentStep, motifInscription }) => {
         {steps.map((step, index) => (
           <div
             key={step.key}
-            className={`progress-bar progress-bar-striped progress-bar-animated bg-${step.color}`}
+            className={`progress-bar progress-bar-striped progress-bar-animated bg-${step.bgColor}`}
             role="progressbar"
             style={{
               width: index <= currentIndex ? `${step.percentage}%` : "0%",

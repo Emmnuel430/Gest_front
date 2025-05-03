@@ -7,6 +7,7 @@ import Back from "../../components/Back";
 const AddProgrammation = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [error, setError] = useState(""); // Pour afficher les erreurs
 
   // Initialisation de l'état pour la programmation
   const [programmation, setProgrammation] = useState({
@@ -23,7 +24,7 @@ const AddProgrammation = () => {
       .then((res) => res.json())
       .then((data) => {
         // Filtrage des étudiants en fonction du type de programmation
-        const filteredEtudiants = data.filter((e) => {
+        const filteredEtudiants = data.etudiants.filter((e) => {
           if (programmation.type === "code") {
             return (
               e.progression?.etape === "cours_de_code" ||
@@ -52,7 +53,7 @@ const AddProgrammation = () => {
         );
       })
       .catch((err) =>
-        console.error("Erreur lors du chargement des étudiants:", err)
+        setError("Erreur lors du chargement des étudiants:", err)
       );
   }, [programmation.type]); // Dépendance : se recharge quand le type change
 
@@ -81,14 +82,47 @@ const AddProgrammation = () => {
     navigate("/recap", { state: programmation });
   };
 
+  // Fonction pour récupérer le thème Bootstrap depuis l'attribut HTML
+  const getBootstrapTheme = () => {
+    return document.body.getAttribute("data-bs-theme") === "dark";
+  };
+  const [isDarkMode, setIsDarkMode] = useState(getBootstrapTheme());
+
+  // Détecte le changement de thème Bootstrap (si data-bs-theme change dynamiquement)
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(getBootstrapTheme());
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["data-bs-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const customTheme = (theme) => ({
+    ...theme,
+    colors: {
+      ...theme.colors,
+      neutral0: isDarkMode ? "#212529" : "#fff", // fond du select
+      neutral80: isDarkMode ? "#f8f9fa" : "#212529", // texte
+      primary25: isDarkMode ? "#343a40" : "#e9ecef", // survol
+      primary: "#0d6efd", // couleur principale Bootstrap
+    },
+  });
+
   return (
     <Layout>
       <Back>Programmations</Back>
       <br />
+      {error && (
+        <div className="alert alert-danger w-50 mx-auto">{error}</div>
+      )}{" "}
       <div className="row recap-container mx-auto px-4">
         <div className="col-md-6 mb-2">
           <h2>Nouvelle Programmation</h2>
-
           {/* Sélection du type de programmation */}
           <div className="mb-2">
             <label htmlFor="type" className="form-label mt-2">
@@ -107,7 +141,6 @@ const AddProgrammation = () => {
               <option value="conduite">Conduite</option>
             </select>
           </div>
-
           {/* Sélection de la date de programmation */}
           <div className="mb-2">
             <label htmlFor="date_prog" className="form-label mt-2">
@@ -127,11 +160,10 @@ const AddProgrammation = () => {
               }
             />
           </div>
-
           {/* Sélection des étudiants */}
           <div className="mb-2">
             <label htmlFor="etudiant" className="form-label mt-2">
-              Étudiant à programmer
+              Étudiant à programmer : {etudiants.length}
             </label>
             <Select
               id="etudiant"
@@ -140,11 +172,11 @@ const AddProgrammation = () => {
               placeholder="Ajouter un étudiant"
               isSearchable
               className="mt-2"
+              theme={customTheme} // Appliquer le thème personnalisé
               isDisabled={!programmation.type} // Désactivé tant que le type n'est pas sélectionné
             />
           </div>
         </div>
-
         {/* Liste des étudiants sélectionnés */}
         <div className="col-md-6">
           <h2>Étudiant(s) sélectionné(s)</h2>
@@ -154,7 +186,7 @@ const AddProgrammation = () => {
                 key={index}
                 className="list-group-item d-flex justify-content-between"
               >
-                {etudiant.label}
+                {index + 1}- {etudiant.label}
                 <button
                   className="btn btn-danger btn-sm"
                   onClick={() =>
@@ -172,7 +204,6 @@ const AddProgrammation = () => {
             ))}
           </ul>
         </div>
-
         {/* Bouton pour valider la programmation */}
         <button
           className="btn btn-primary mt-3 mx-auto w-100"

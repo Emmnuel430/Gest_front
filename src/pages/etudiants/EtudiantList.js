@@ -85,6 +85,7 @@ const EtudiantList = () => {
         throw new Error("Erreur lors de la récupération des etudiants."); // Gère les erreurs HTTP
       }
       const data = await response.json(); // Parse les données JSON
+
       setEtudiants(data.etudiants); // Met à jour l'état avec les données
     } catch (err) {
       setError("Impossible de charger les données : " + err.message); // Stocke le message d'erreur
@@ -164,6 +165,15 @@ const EtudiantList = () => {
     return shortened; // Retourne la version abrégée
   };
 
+  // Fonction pour formater l'étape d'un étudiant
+  function formatEtape(etape) {
+    if (!etape) return "";
+    return etape
+      .split("_") // coupe par "_"
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // met en majuscule la première lettre
+      .join(" "); // re-colle avec des espaces
+  }
+
   //
   const filteredEtudiants = sortedEtudiants.filter(
     (etudiant) =>
@@ -234,7 +244,7 @@ const EtudiantList = () => {
                   <th>Scolarité</th>
                   <th>Motif</th>
                   <th>Créé il y a</th>
-                  <th>M-A-J il y a</th>
+                  <th>Etape</th>
                   <th>Opérations</th>
                 </tr>
               </thead>
@@ -272,9 +282,15 @@ const EtudiantList = () => {
                         </td>
                         <td>{formatDateRelative(etudiant.created_at)}</td>
                         <td>
-                          {etudiant.created_at == etudiant.updated_at
-                            ? "-"
-                            : formatDateRelative(etudiant.updated_at)}
+                          {etudiant.progression?.etape ? (
+                            <span className="badge bg-primary text-white">
+                              {formatEtape(etudiant.progression.etape)}
+                            </span>
+                          ) : (
+                            <span className="badge bg-secondary text-white">
+                              N/A
+                            </span>
+                          )}
                         </td>
                         <td className="table-operations d-flex justify-content-center">
                           <div className="d-flex gap-2">

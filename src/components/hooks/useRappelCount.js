@@ -11,7 +11,6 @@ const useRappelCount = () => {
       );
 
       const response = await res.json(); // Convertir la réponse en JSON
-      console.log("Response de l'API :", response); // Afficher la réponse de l'API dans la console
       if (
         response &&
         response.recentImportantRappels !== undefined &&
@@ -36,7 +35,6 @@ const useRappelCount = () => {
   }, []);
 
   const totalRappels = rappelCount + rappelImpCount;
-  console.log("Total rappels :", totalRappels);
 
   return totalRappels; // retourne le nombre de rappels et le nombre de rappels importants
 };

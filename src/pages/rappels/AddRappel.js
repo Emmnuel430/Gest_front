@@ -138,6 +138,7 @@ const AddRappel = ({ onClose }) => {
           className="form-control"
           value={dateRappel}
           onChange={(e) => setDateRappel(e.target.value)}
+          min={new Date().toISOString().split("T")[0]} // Date actuelle
         />
         <br />
         <label htmlFor="type" className="form-label">
