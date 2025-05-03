@@ -149,8 +149,9 @@ const Logs = () => {
                     <tr key={log.id || key}>
                       <td>{startIndex + key + 1}</td>
                       <td>
-                        {log.user?.nom || "Inconnu"} (ID:{" "}
-                        {log.user?.id || "Unknown"})
+                        {log.user_nom || "Inconnu"}{" "}
+                        {log.user_prenom || "Inconnu"} (ID:{" "}
+                        {log.user?.id || "Inconnu"})
                       </td>
                       <td>
                         {log.created_at
@@ -204,14 +205,32 @@ const Logs = () => {
               <Modal.Body>
                 {selectedLog && (
                   <div className="container">
+                    <h5 className="fw-bold">• Infos Utilisateur :</h5>
                     <div className="row mb-2">
-                      <div className="col-6 fw-bold">Utilisateur :</div>
+                      <div className="col-6 fw-bold">Nom :</div>
                       <div className="col-6">
-                        {selectedLog.user?.nom || "Inconnu"} (ID:{" "}
+                        {selectedLog.user_nom || "Inconnu"} (ID:{" "}
                         {selectedLog.user?.id || "Inconnu"})
                       </div>
                     </div>
                     <div className="row mb-2">
+                      <div className="col-6 fw-bold">Prenom :</div>
+                      <div className="col-6">
+                        {selectedLog.user_prenom || "Inconnu"}
+                      </div>
+                    </div>
+                    <div className="row mb-2">
+                      <div className="col-6 fw-bold">Créé le :</div>
+                      <div className="col-6">
+                        {selectedLog.user_doc || "Inconnu"}
+                      </div>
+                    </div>
+
+                    <div className="row mb-2 mx-auto">
+                      -----------------------
+                    </div>
+                    <div className="row mb-2">
+                      <h5 className="fw-bold">• Infos Log :</h5>
                       <div className="col-6 fw-bold">Date :</div>
                       <div className="col-6">
                         {selectedLog.created_at
