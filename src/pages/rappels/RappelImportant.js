@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { format, formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
-import Loader from "../../components/Loader";
+import Loader from "../../components/Layout/Loader";
 
 const RappelImportant = () => {
   const [rappels, setRappels] = useState([]);
@@ -15,7 +15,9 @@ const RappelImportant = () => {
           `${process.env.REACT_APP_API_BASE_URL}/generate_rappels`
         );
         const data = await response.json();
-        setRappels(data.rappels);
+        console.log(data.rappelActifs);
+
+        setRappels(data.rappelActifs);
         setLoading(false);
       } catch (err) {
         setError("Erreur lors de la récupération des rappels.");
@@ -133,6 +135,10 @@ const RappelImportant = () => {
                 </div>
                 <span className="text-muted">
                   {rappel.description || "Pas de description."}
+                </span>
+                <br />
+                <span className="text-muted italic text-capitalize">
+                  Type : {rappel.type || "Pas de type."}
                 </span>
 
                 <br />

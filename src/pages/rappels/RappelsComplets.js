@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal } from "react-bootstrap";
-import Layout from "../../components/Layout";
-import Back from "../../components/Back";
-import HeaderWithFilter from "../../components/HeaderWithFilter";
-import ConfirmPopup from "../../components/ConfirmPopup";
-import Loader from "../../components/Loader";
+import Layout from "../../components/Layout/Layout";
+import Back from "../../components/Layout/Back";
+import HeaderWithFilter from "../../components/Layout/HeaderWithFilter";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
+import Loader from "../../components/Layout/Loader";
 import { format, formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import RappelUpdate from "./RappelUpdate"; // Import du nouveau composant

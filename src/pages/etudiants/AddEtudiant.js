@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout";
-import Back from "../../components/Back";
-import ConfirmPopup from "../../components/ConfirmPopup";
+import Layout from "../../components/Layout/Layout";
+import Back from "../../components/Layout/Back";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
+import ToastMessage from "../../components/Layout/ToastMessage"; // adapte le chemin si besoin
 
 const AddEtudiant = () => {
   // Déclaration des états pour gérer les champs du formulaire
@@ -45,7 +46,7 @@ const AddEtudiant = () => {
     const categorySet = new Set(categories);
 
     if (hasReduction) {
-      return 20000; // Toutes les catégories coûtent 20k avec réduction
+      return 25000; // Toutes les catégories coûtent 25k avec réduction
     }
 
     // Utilisation de switch pour les combinaisons
@@ -83,6 +84,12 @@ const AddEtudiant = () => {
     );
     setScolarite(calculatedScolarite);
   }, [selectedCategories, reduction, motifInscription]);
+
+  useEffect(() => {
+    if (error) {
+      handleCloseModal(); // Ferme le modal dès qu'une erreur apparaît
+    }
+  }, [error]);
 
   // Gestion des changements dans les catégories sélectionnées
   const handleCategoryChange = (category, checked) => {
@@ -163,7 +170,7 @@ const AddEtudiant = () => {
         scolarite: calculatedScolarite, // Ajout de la scolarité calculée
         montant_paye: montantPaye,
         motifInscription,
-        categorie: selectedCategories, // Convertir les catégories
+        categorie: [selectedCategories], // Convertir les catégories
         idUser: userId,
       };
 
@@ -222,7 +229,14 @@ const AddEtudiant = () => {
         <h1>Création d'un nouvel étudiant</h1>
 
         {/* Affichage des messages d'erreur globaux */}
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && (
+          <ToastMessage
+            message={error}
+            onClose={() => {
+              setError(null);
+            }}
+          />
+        )}
 
         {/* Description */}
         <p className="text-muted">
@@ -555,7 +569,7 @@ const AddEtudiant = () => {
           title="Confirmer l'ajout"
           body={
             <p>
-              Êtes-vous sûr de vouloir ajouter le moniteur suivant ?
+              Êtes-vous sûr de vouloir ajouter l'etudiant suivant ?
               <br />
               <strong>Nom :</strong> {nom} <br />
               <strong>Prénom :</strong> {prenom} <br />

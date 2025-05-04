@@ -3,11 +3,11 @@ import { Table } from "react-bootstrap";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useNavigate, useLocation } from "react-router-dom";
-import Loader from "../../components/Loader";
-import Layout from "../../components/Layout";
-import ConfirmPopup from "../../components/ConfirmPopup";
-import HeaderWithFilter from "../../components/HeaderWithFilter";
-import SearchBar from "../../components/SearchBar"; // Composant pour la barre de recherche
+import Loader from "../../components/Layout/Loader";
+import Layout from "../../components/Layout/Layout";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
+import HeaderWithFilter from "../../components/Layout/HeaderWithFilter";
+import SearchBar from "../../components/Layout/SearchBar"; // Composant pour la barre de recherche
 
 const MoniteurList = () => {
   // États pour stocker les moniteurs, le statut de chargement et les erreurs

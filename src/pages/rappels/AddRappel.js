@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ConfirmPopup from "../../components/ConfirmPopup";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
 
 const AddRappel = ({ onClose }) => {
   const [titre, setTitre] = useState("");

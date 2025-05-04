@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Importez Link pour les redirections
-import Loader from "../../components/Loader"; // Assurez-vous que le chemin est correct
+import Loader from "../../components/Layout/Loader"; // Assurez-vous que le chemin est correct
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale"; // Importation pour la localisation française
 

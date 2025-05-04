@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
-import Layout from "../../components/Layout";
-import ConfirmPopup from "../../components/ConfirmPopup";
-import HeaderWithFilter from "../../components/HeaderWithFilter";
-import Loader from "../../components/Loader";
+import Layout from "../../components/Layout/Layout";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
+import HeaderWithFilter from "../../components/Layout/HeaderWithFilter";
+import Loader from "../../components/Layout/Loader";
 import { format } from "date-fns";
 
 const ProgrammationList = () => {
@@ -25,7 +25,7 @@ const ProgrammationList = () => {
           `${process.env.REACT_APP_API_BASE_URL}/programmations`
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         setProgrammations(data.programmations); // Mise à jour de la liste des programmations
         setLoading(false);

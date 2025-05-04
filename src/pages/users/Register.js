@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout";
-import Back from "../../components/Back";
-import ConfirmPopup from "../../components/ConfirmPopup"; // Importation du modal de confirmation
+import Layout from "../../components/Layout/Layout";
+import Back from "../../components/Layout/Back";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup"; // Importation du modal de confirmation
 
 const Register = () => {
   // États pour stocker les données du formulaire et d'autres informations d'état

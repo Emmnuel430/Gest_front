@@ -4,11 +4,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
-import Layout from "../../components/Layout";
-import ConfirmPopup from "../../components/ConfirmPopup";
-import HeaderWithFilter from "../../components/HeaderWithFilter";
-import Loader from "../../components/Loader";
-import SearchBar from "../../components/SearchBar";
+import Layout from "../../components/Layout/Layout";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
+import HeaderWithFilter from "../../components/Layout/HeaderWithFilter";
+import Loader from "../../components/Layout/Loader";
+import SearchBar from "../../components/Layout/SearchBar";
 
 // Définition du composant principal
 const EtudiantList = () => {

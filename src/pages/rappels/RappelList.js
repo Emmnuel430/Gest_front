@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Table, Spinner, Modal } from "react-bootstrap";
-import Layout from "../../components/Layout";
-import ConfirmPopup from "../../components/ConfirmPopup";
-import HeaderWithFilter from "../../components/HeaderWithFilter";
-import Loader from "../../components/Loader";
+import Layout from "../../components/Layout/Layout";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
+import HeaderWithFilter from "../../components/Layout/HeaderWithFilter";
+import Loader from "../../components/Layout/Loader";
 import { format } from "date-fns";
 import AddRappel from "./AddRappel";
 import { Link } from "react-router-dom"; // Importer Link pour la navigation

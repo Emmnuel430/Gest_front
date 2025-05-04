@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Loader from "../../components/Loader"; // Assurez-vous que le chemin est correct
+import Loader from "../../components/Layout/Loader"; // Assurez-vous que le chemin est correct
 import { Line, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,

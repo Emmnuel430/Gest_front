@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout";
-import Back from "../../components/Back";
-import ConfirmPopup from "../../components/ConfirmPopup";
+import Layout from "../../components/Layout/Layout";
+import Back from "../../components/Layout/Back";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
 
 const MoniteurUpdate = () => {
   const { id } = useParams(); // Récupère l'ID du moniteur depuis l'URL

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Loader from "../../components/Loader";
+import Loader from "../../components/Layout/Loader";
 import userImg from "../../assets/img/etudiant.png"; // Image de profil par défaut
-import Layout from "../../components/Layout";
-import ProgressBar from "../../components/ProgressBar";
-import Back from "../../components/Back";
+import Layout from "../../components/Layout/Layout";
+import ProgressBar from "../../components/others/ProgressBar";
+import Back from "../../components/Layout/Back";
 
 const Etudiant = () => {
   const { id } = useParams(); // Récupération de l'ID depuis l'URL

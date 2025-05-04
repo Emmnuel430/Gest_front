@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout";
-import Back from "../../components/Back";
-import ConfirmPopup from "../../components/ConfirmPopup";
+import Layout from "../../components/Layout/Layout";
+import Back from "../../components/Layout/Back";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
 
 const AddMoniteur = () => {
   // États pour gérer les champs du formulaire et les interactions

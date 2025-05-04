@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button } from "react-bootstrap"; // Importation pour le modal
-import Layout from "../components/Layout";
-import Loader from "../components/Loader";
-import HeaderWithFilter from "../components/HeaderWithFilter";
+import Layout from "../components/Layout/Layout";
+import Loader from "../components/Layout/Loader";
+import HeaderWithFilter from "../components/Layout/HeaderWithFilter";
 
 import { format, set } from "date-fns";
 

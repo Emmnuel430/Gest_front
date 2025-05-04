@@ -5,9 +5,9 @@ import { useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
-import Layout from "../../components/Layout"; // Composant pour la mise en page
-import Back from "../../components/Back"; // Composant pour le bouton de retour
-import ConfirmPopup from "../../components/ConfirmPopup"; // Importation du composant ConfirmPopup
+import Layout from "../../components/Layout/Layout"; // Composant pour la mise en page
+import Back from "../../components/Layout/Back"; // Composant pour le bouton de retour
+import ConfirmPopup from "../../components/Layout/ConfirmPopup"; // Importation du composant ConfirmPopup
 
 const Recap = () => {
   const location = useLocation(); // Récupère l'état passé via la navigation

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Layout from "../../components/Layout";
-import Back from "../../components/Back";
-import { Spinner } from "react-bootstrap";
-import ConfirmPopup from "../../components/ConfirmPopup"; // Importation du popup de confirmation
+import Layout from "../../components/Layout/Layout";
+import Back from "../../components/Layout/Back";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup"; // Importation du popup de confirmation
 
 const UserUpdate = () => {
   // Récupération de l'ID de l'utilisateur à partir des paramètres d'URL

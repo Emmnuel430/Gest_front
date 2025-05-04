@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout"; // Composant Layout qui contient la structure générale de la page
-import HeaderWithFilter from "../../components/HeaderWithFilter"; // Composant pour l'en-tête avec filtre
-import Loader from "../../components/Loader"; // Composant pour le loader
-import ConfirmPopup from "../../components/ConfirmPopup"; // Composant de modal de confirmation pour la suppression d'utilisateur
-import SearchBar from "../../components/SearchBar"; // Composant pour la barre de recherche
+import Layout from "../../components/Layout/Layout"; // Composant Layout qui contient la structure générale de la page
+import HeaderWithFilter from "../../components/Layout/HeaderWithFilter"; // Composant pour l'en-tête avec filtre
+import Loader from "../../components/Layout/Loader"; // Composant pour le loader
+import ConfirmPopup from "../../components/Layout/ConfirmPopup"; // Composant de modal de confirmation pour la suppression d'utilisateur
+import SearchBar from "../../components/Layout/SearchBar"; // Composant pour la barre de recherche
 
 const UserList = () => {
   // États locaux pour gérer les utilisateurs, l'état de chargement, les erreurs et les modals

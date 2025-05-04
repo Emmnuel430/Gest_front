@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 import Statistiques from "./main/Statistiques";
 import Recents from "./main/Recents";
 import Graph from "./main/Graph";

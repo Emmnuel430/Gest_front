@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { useNavigate, useLocation } from "react-router-dom";
-import Layout from "../../components/Layout";
-import Back from "../../components/Back";
+import Layout from "../../components/Layout/Layout";
+import Back from "../../components/Layout/Back";
 
 const AddProgrammation = () => {
   const location = useLocation();

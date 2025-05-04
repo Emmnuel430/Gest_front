@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import useRappelCount from "./hooks/useRappelCount";
+import useRappelCount from "../hooks/useRappelCount";
 
 const SidebarLinks = ({ user }) => {
   const location = useLocation();

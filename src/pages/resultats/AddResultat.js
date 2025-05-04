@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-import Layout from "../../components/Layout";
-import Back from "../../components/Back";
-import ConfirmPopup from "../../components/ConfirmPopup";
+import Layout from "../../components/Layout/Layout";
+import Back from "../../components/Layout/Back";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
 
 const AddResultat = () => {
   const navigate = useNavigate();
@@ -143,6 +143,36 @@ const AddResultat = () => {
     }
   };
 
+  // Fonction pour récupérer le thème Bootstrap depuis l'attribut HTML
+  const getBootstrapTheme = () => {
+    return document.body.getAttribute("data-bs-theme") === "dark";
+  };
+  const [isDarkMode, setIsDarkMode] = useState(getBootstrapTheme());
+
+  // Détecte le changement de thème Bootstrap (si data-bs-theme change dynamiquement)
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(getBootstrapTheme());
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["data-bs-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const customTheme = (theme) => ({
+    ...theme,
+    colors: {
+      ...theme.colors,
+      neutral0: isDarkMode ? "#212529" : "#fff", // fond du select
+      neutral80: isDarkMode ? "#f8f9fa" : "#212529", // texte
+      primary25: isDarkMode ? "#343a40" : "#e9ecef", // survol
+      primary: "#0d6efd", // couleur principale Bootstrap
+    },
+  });
   return (
     <Layout>
       <Back>resultats</Back>
@@ -190,6 +220,7 @@ const AddResultat = () => {
           }
           placeholder="Sélectionnez un étudiant"
           isSearchable
+          theme={customTheme} // Appliquer le thème personnalisé
           isDisabled={!resultat.libelle} // Désactiver si aucun type de résultat n'est sélectionné
         />
         <br />

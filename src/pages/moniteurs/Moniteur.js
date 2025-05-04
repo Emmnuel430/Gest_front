@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Table } from "react-bootstrap"; // Importation de Table depuis react-bootstrap
-import Layout from "../../components/Layout";
-import Loader from "../../components/Loader";
-import Back from "../../components/Back";
+import Layout from "../../components/Layout/Layout";
+import Loader from "../../components/Layout/Loader";
+import Back from "../../components/Layout/Back";
 
 const Moniteur = () => {
   const { id } = useParams(); // Récupérer l'ID du moniteur depuis l'URL

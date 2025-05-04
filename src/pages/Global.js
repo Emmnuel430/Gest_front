@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Loader from "../components/Loader";
-import Layout from "../components/Layout";
+import Loader from "../components/Layout/Loader";
+import Layout from "../components/Layout/Layout";
 import { Line, Pie, Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Layout from "../../components/Layout";
-import Back from "../../components/Back";
-import ConfirmPopup from "../../components/ConfirmPopup";
+import Layout from "../../components/Layout/Layout";
+import Back from "../../components/Layout/Back";
+import ConfirmPopup from "../../components/Layout/ConfirmPopup";
 
 const EtudiantUpdate = () => {
   // Récupération des paramètres de l'URL et initialisation des états
@@ -374,7 +374,16 @@ const EtudiantUpdate = () => {
         <button
           className="btn btn-primary w-100"
           onClick={() => setShowModal(true)}
-          disabled={loading}
+          disabled={
+            loading ||
+            !etudiant.nom ||
+            !etudiant.prenom ||
+            (["cours_de_code", "cours_de_conduite"].includes(
+              etudiant.progression.etape
+            ) &&
+              !selectedMoniteur &&
+              !etudiant.idMoniteur)
+          }
         >
           Modifier{" "}
         </button>
