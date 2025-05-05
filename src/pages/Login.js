@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "../assets/css/Login.css";
-import loginImage from "../assets/img/login1.png";
-import logo from "../assets/img/logo.png";
+import "assets/css/Login.css";
+import loginImage from "assets/img/login1.png";
+import logo from "assets/img/logo.png";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 
