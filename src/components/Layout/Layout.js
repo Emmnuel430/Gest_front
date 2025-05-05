@@ -4,7 +4,7 @@ import "../../assets/css/Home.css"; // Importation du fichier CSS pour la mise e
 import HomeScript from "../../assets/js/HomeScript"; // Importation d'un script personnalisé pour la page
 import loginImage from "../../assets/img/user.png"; // Importation d'une image pour le profil utilisateur
 import { useNavigate } from "react-router-dom"; // Importation de 'useNavigate' pour la navigation
-import logo from "../../assets/img/Logo_min.png"; // Importation du logo de l'application.
+import logo from "../../assets/img/minlogo.png"; // Importation du logo de l'application.
 import Sidebar from "./Sidebar"; // Importation du composant Sidebar
 import ThemeSwitcher from "../others/ThemeSwitcher"; // Importation du composant ThemeSwitcher
 
