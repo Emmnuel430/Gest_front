@@ -1,6 +1,6 @@
 import React from "react"; // Importation de React pour utiliser JSX et les fonctionnalités React.
-import userImg from "assets/img/user.png"; // Importation de l'image de profil par défaut.
-import logo from "assets/img/Logo_min.png"; // Importation du logo de l'application.
+import userImg from "../../assets/img/user.png"; // Importation de l'image de profil par défaut.
+import logo from "../../assets/img/Logo_min.png"; // Importation du logo de l'application.
 import SidebarLinks from "./SidebarLinks"; // Importation du composant SidebarLinks qui contient les liens de la barre latérale.
 
 const Sidebar = ({ user }) => {
