@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { format, formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import Loader from "../../components/Layout/Loader";
@@ -7,6 +8,7 @@ const RappelImportant = () => {
   const [rappels, setRappels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Navigation entre les pages
 
   useEffect(() => {
     const fetchRappels = async () => {
@@ -15,7 +17,6 @@ const RappelImportant = () => {
           `${process.env.REACT_APP_API_BASE_URL}/generate_rappels`
         );
         const data = await response.json();
-        console.log(data.rappelActifs);
 
         setRappels(data.rappelActifs);
         setLoading(false);
@@ -81,7 +82,7 @@ const RappelImportant = () => {
   return (
     <div className="bg-body rounded p-4">
       <div className="d-flex align-items-center justify-content-between mb-2">
-        <p className="mb-0 d-flex align-items-center">
+        <div className="mb-0 d-flex align-items-center">
           <h4 className="mb-0 me-2">Rappels Importants ({totalRappels})</h4>
           <span className="rounded rounded-circle border border-danger bg-danger-subtle text-danger p-2 me-2">
             {rappelsPrioriteElevee}
@@ -92,7 +93,7 @@ const RappelImportant = () => {
           <span className="rounded rounded-circle border border-secondary bg-secondary-subtle text-secondary p-2">
             {rappelsPrioriteFaible}
           </span>
-        </p>
+        </div>
         {/* <a href="/rappels-complets">Voir tout</a> */}
       </div>
       {rappels.length === 0 ? (
@@ -104,11 +105,33 @@ const RappelImportant = () => {
             <div
               key={index}
               className={`d-flex align-items-center border shadow-sm rounded p-3 mb-2 
-              ${
-                rappel.priorite === "élevée"
-                  ? "border-danger bg-danger-subtle"
-                  : "border-warning bg-warning-subtle"
-              }`}
+                ${
+                  rappel.priorite === "élevée"
+                    ? "border-danger bg-danger-subtle"
+                    : "border-warning bg-warning-subtle"
+                }`}
+              style={{
+                cursor: rappel.type !== "examen" ? "pointer" : "default",
+              }}
+              onClick={() => {
+                switch (rappel.type) {
+                  case "paiement":
+                  case "inactivité":
+                  case "formation":
+                  case "affectation":
+                    navigate(`/update/etudiant/${rappel.model_id}`);
+                    break;
+                  case "résultat":
+                    navigate("/resultats");
+                    break;
+                  case "examen":
+                    navigate("/programmations");
+                    break;
+                  default:
+                    // Ne rien faire
+                    break;
+                }
+              }}
             >
               <i
                 className={`bi ${
@@ -140,7 +163,6 @@ const RappelImportant = () => {
                 <span className="text-muted italic text-capitalize">
                   Type : {rappel.type || "Pas de type."}
                 </span>
-
                 <br />
                 {rappel.date_rappel && (
                   <span className="text-muted italic">

@@ -33,6 +33,21 @@ const Statistiques = () => {
     fetchData();
   }, []);
 
+  // Fonction pour formater le montant
+  function formatMontant(montant) {
+    if (montant >= 1_000_000) {
+      return (
+        (montant / 1_000_000)
+          .toFixed(montant % 1_000_000 === 0 ? 0 : 1)
+          .replace(".", ",") + " M"
+      );
+    } else {
+      return new Intl.NumberFormat("fr-FR", { useGrouping: true }).format(
+        Math.trunc(montant)
+      );
+    }
+  }
+
   return (
     <div>
       {/* Affiche un message d'erreur si une erreur est survenue */}
@@ -55,13 +70,16 @@ const Statistiques = () => {
                   <i className="fa fa-coins fa-3x text-primary"></i>
                   <div className="ms-3">
                     <div className="mb-2 text-body">Revenu total (FCFA)</div>
-                    <h6 className="text-body mb-0 h2 text-center">
+                    <h6
+                      className="text-body mb-0 h2 text-center"
+                      title={new Intl.NumberFormat("fr-FR", {
+                        useGrouping: true,
+                      }).format(totaux.totalMontantPaye)}
+                    >
                       <strong>
                         <em>
                           {totaux?.totalMontantPaye
-                            ? new Intl.NumberFormat("fr-FR", {
-                                useGrouping: true,
-                              }).format(Math.trunc(totaux?.totalMontantPaye))
+                            ? formatMontant(totaux.totalMontantPaye)
                             : "N/A"}{" "}
                         </em>
                       </strong>

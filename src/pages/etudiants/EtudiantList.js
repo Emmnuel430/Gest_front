@@ -174,13 +174,17 @@ const EtudiantList = () => {
       .join(" "); // re-colle avec des espaces
   }
 
-  //
-  const filteredEtudiants = sortedEtudiants.filter(
-    (etudiant) =>
+  const filteredEtudiants = sortedEtudiants.filter((etudiant) => {
+    const normalize = (str) => str.trim().toLowerCase().replace(/\s+/g, " ");
+    const fullName = normalize(`${etudiant.nom} ${etudiant.prenom}`);
+    const reversedFullName = normalize(`${etudiant.prenom} ${etudiant.nom}`);
+    const query = normalize(searchQuery);
+
+    return (
       (!filter || etudiant.motif_inscription === filter) &&
-      (etudiant.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        etudiant.prenom.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+      (fullName.includes(query) || reversedFullName.includes(query))
+    );
+  });
 
   // Rendu du composant
   return (

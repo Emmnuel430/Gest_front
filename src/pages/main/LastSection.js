@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Importez Link pour les redirections
+import { Link, useNavigate } from "react-router-dom"; // Importez Link pour les redirections
 import Loader from "../../components/Layout/Loader"; // Assurez-vous que le chemin est correct
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale"; // Importation pour la localisation française
@@ -11,6 +11,7 @@ const LastSection = () => {
   const [logs, setLogs] = useState([]); // État pour stocker les logs
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Navigation entre les pages
 
   useEffect(() => {
     fetchRappels(); // Appel de la fonction pour récupérer les rappels importants
@@ -38,7 +39,7 @@ const LastSection = () => {
       }
       const data = await response.json(); // Parse les données JSON
       // console.log(data);
-      setRappelsImportant(data.rappels);
+      setRappelsImportant(data.rappelActifs);
     } catch (err) {
       setError("Impossible de charger les données : " + err.message); // Stocke le message d'erreur
     } finally {
@@ -167,6 +168,28 @@ const LastSection = () => {
                           ? "border-danger bg-danger-subtle"
                           : "border-warning bg-warning-subtle"
                       }`}
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          switch (rappel.type) {
+                            case "paiement":
+                            case "inactivité":
+                            case "formation":
+                            case "affectation":
+                              navigate(`/update/etudiant/${rappel.model_id}`);
+                              break;
+                            case "résultat":
+                              navigate("/resultats");
+                              break;
+                            case "examen":
+                              navigate("/programmations");
+                              break;
+                            default:
+                              // Ne rien faire
+                              break;
+                          }
+                        }}
                       >
                         <i
                           className={`bi ${
@@ -255,15 +278,19 @@ const LastSection = () => {
                   <h6 className="mb-0">Resultats non rétirés</h6>
                   <Link to="/resultats">Voir</Link>
                 </div>
-                <div className="d-flex align-items-center py-2">
+                <div className="d-flex flex-column align-items-center py-2">
                   {resultats.length > 0 ? (
                     resultats.map((resultat, index) => (
                       <div
                         key={index}
-                        className="d-flex align-items-center border-bottom w-100"
+                        className="d-flex align-items-center border-bottom w-100 pb-1 mb-2"
                       >
                         <i
-                          className={`bi bi-file-earmark-text-fill text-primary`}
+                          className={`bi bi-file-earmark-text-fill ${
+                            resultat.libelle === "code"
+                              ? "text-info"
+                              : "text-warning"
+                          }`}
                           style={{ fontSize: "2rem" }}
                         ></i>
                         <div className="w-100 ms-3">

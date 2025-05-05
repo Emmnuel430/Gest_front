@@ -70,10 +70,7 @@ const Recents = () => {
                     </tr>
                   ) : (
                     etudiants
-                      .sort(
-                        (a, b) =>
-                          new Date(b.created_at) - new Date(a.created_at)
-                      ) // Trie par date de création décroissante
+                      .sort((a, b) => b.id - a.id) // Trie par ID décroissant
                       // .sort((a, b) => new Date(b.date_inscription) - new Date(a.date_inscription)) // Trie par date d'inscription décroissante
                       .map((etudiant) => (
                         <tr key={etudiant.id}>

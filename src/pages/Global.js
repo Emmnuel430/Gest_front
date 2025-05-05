@@ -240,14 +240,14 @@ const Global = () => {
     ],
   });
 
-  const renderCard = ({ icon, color, title, value, subtitle }) => (
+  const renderCard = ({ icon, color, title, title2, value, subtitle }) => (
     // Card pour afficher les totaux
     <div className="col-sm-6 col-xl-3" key={title}>
       <div className="bg-body rounded d-flex align-items-center justify-content-between p-4 border shadow-sm h-100">
         <i className={`fa ${icon} fa-3x text-${color}`}></i>
         <div className="ms-3">
           <div className="mb-2">{title}</div>
-          <h6 className="mb-0 h2 text-center">
+          <h6 className="mb-0 h2 text-center" title={title2}>
             {value}
             {subtitle && (
               <>
@@ -265,15 +265,33 @@ const Global = () => {
   const soldé = totaux?.etudiantsSoldes || 0;
   const nonSoldé = total - soldé;
 
+  // Fonction pour formater le montant
+  function formatMontant(montant) {
+    if (montant >= 1_000_000) {
+      return (
+        (montant / 1_000_000)
+          .toFixed(montant % 1_000_000 === 0 ? 0 : 1)
+          .replace(".", ",") + " M"
+      );
+    } else {
+      return new Intl.NumberFormat("fr-FR", { useGrouping: true }).format(
+        Math.trunc(montant)
+      );
+    }
+  }
+
   const cards = [
     {
       icon: "fa-coins",
       color: "primary",
       title: "Revenu total (FCFA)",
+
+      title2: new Intl.NumberFormat("fr-FR", {
+        useGrouping: true,
+      }).format(totaux.totalMontantPaye),
+
       value: totaux?.totalMontantPaye ? (
-        new Intl.NumberFormat("fr-FR").format(
-          Math.trunc(totaux.totalMontantPaye)
-        )
+        formatMontant(totaux.totalMontantPaye)
       ) : (
         <span className="text-muted">00</span>
       ),

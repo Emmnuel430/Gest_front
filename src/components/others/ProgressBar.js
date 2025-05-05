@@ -154,7 +154,7 @@ const ProgressBar = ({ currentStep, motifInscription }) => {
       </div>
 
       {/* Style supplémentaire */}
-      <style jsx>{`
+      <style jsx="true">{`
         .progress-container {
           width: 100%;
         }
